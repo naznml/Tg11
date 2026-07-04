@@ -1,1 +1,3450 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Магистратура тесті</title>
 
+<style>
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#667085;
+  --line:#e5e7eb;
+  --main:#4f46e5;
+  --main2:#7c3aed;
+  --good:#16a34a;
+  --bad:#dc2626;
+  --shadow:0 16px 40px rgba(15,23,42,.08);
+  --radius:22px;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+body.lang-kk .ru{display:none!important}
+body.lang-ru .kk{display:none!important}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:16px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:12px 0;
+}
+
+.brand{
+  font-weight:950;
+  font-size:18px;
+}
+
+.lang{
+  display:flex;
+  gap:8px;
+}
+
+.lang button{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--text);
+  border-radius:14px;
+  padding:9px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.lang button.active{
+  background:var(--main);
+  color:#fff;
+  border-color:var(--main);
+}
+
+.hero{
+  background:linear-gradient(135deg,#ffffff,#eef2ff);
+  border:1px solid var(--line);
+  border-radius:30px;
+  box-shadow:var(--shadow);
+  padding:28px;
+}
+
+h1{
+  margin:0 0 12px;
+  font-size:clamp(28px,5vw,52px);
+  line-height:1;
+  letter-spacing:-.04em;
+}
+
+h2{
+  margin:0 0 10px;
+  font-size:clamp(24px,3vw,38px);
+}
+
+h3{
+  margin:0 0 12px;
+  font-size:22px;
+}
+
+p{
+  line-height:1.65;
+}
+
+.lead{
+  color:#475467;
+}
+
+.noticeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:16px;
+}
+
+.notice{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+.cards a{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:950;
+  box-shadow:0 8px 24px rgba(79,70,229,.10);
+}
+
+.cards span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:6px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin:16px 0;
+}
+
+.q{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin:14px 0;
+}
+
+.qt{
+  font-weight:900;
+  line-height:1.55;
+  margin:0 0 12px;
+}
+
+.opts{
+  display:grid;
+  gap:8px;
+}
+
+.op{
+  display:flex;
+  gap:8px;
+  background:#f9fafb;
+  border:1px solid #edf0f3;
+  border-radius:14px;
+  padding:10px 12px;
+  cursor:pointer;
+}
+
+.op input{
+  margin-top:3px;
+}
+
+.op.good{
+  background:#dcfce7;
+  border-color:#86efac;
+  color:#14532d;
+  font-weight:900;
+}
+
+.op.bad{
+  background:#fee2e2;
+  border-color:#fca5a5;
+}
+
+.q.correct{
+  background:#f0fdf4;
+  border-color:#86efac;
+}
+
+.q.wrong{
+  background:#fff1f2;
+  border-color:#fca5a5;
+}
+
+.exp{
+  display:none;
+  margin-top:12px;
+  background:#f8fafc;
+  border:1px solid #e8edf5;
+  border-radius:16px;
+  padding:12px;
+}
+
+.q.show .exp{
+  display:block;
+}
+
+.steps{
+  margin:8px 0 0;
+  padding-left:22px;
+}
+
+.steps li{
+  margin:7px 0;
+  line-height:1.6;
+}
+
+.btn{
+  border:0;
+  background:linear-gradient(135deg,var(--main),var(--main2));
+  color:#fff;
+  border-radius:14px;
+  padding:11px 16px;
+  font-weight:950;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.btn.secondary{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.result{
+  margin-top:14px;
+  font-weight:950;
+  font-size:18px;
+}
+
+.textBlock,
+.audioBox{
+  background:#fbfdff;
+  border:1px solid #e8edf5;
+  border-radius:18px;
+  padding:15px;
+  margin:15px 0;
+  line-height:1.75;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+
+.tab{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:var(--main);
+  color:#fff;
+}
+
+.tabContent{
+  display:none;
+  background:#fbfdff;
+  border:1px solid #e8edf5;
+  border-radius:18px;
+  padding:15px;
+  line-height:1.75;
+}
+
+.tabContent.active{
+  display:block;
+}
+
+.vocabGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.vocabItem{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px;
+}
+
+.svgBox{
+  display:flex;
+  justify-content:center;
+  overflow:auto;
+  background:#fbfdff;
+  border:1px solid #e8edf5;
+  border-radius:18px;
+  padding:12px;
+  margin:12px 0;
+}
+
+svg{
+  max-width:100%;
+  height:auto;
+}
+
+.tbl{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  margin:12px 0;
+}
+
+.tbl th,
+.tbl td{
+  border:1px solid #cbd5e1;
+  padding:8px;
+  text-align:center;
+}
+
+.overall{
+  background:#111827;
+  color:#fff;
+  border-radius:24px;
+  padding:20px;
+  margin:20px 0 40px;
+}
+
+.overall .lead{
+  color:#cbd5e1;
+}
+
+.mathBox{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-weight:800;
+}
+
+.frac{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  vertical-align:middle;
+  line-height:1;
+  font-weight:800;
+}
+
+.frac span:first-child{
+  border-bottom:1.5px solid currentColor;
+  padding:0 4px 2px;
+}
+
+.frac span:last-child{
+  padding-top:2px;
+}
+
+@media(max-width:760px){
+  .noticeGrid,
+  .cards,
+  .vocabGrid{
+    grid-template-columns:1fr;
+  }
+
+  .tabs{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero{
+    padding:20px;
+  }
+}
+</style>
+</head>
+
+<body class="lang-kk">
+
+<div class="wrap topbar">
+  <div class="brand">
+    <span class="kk">Магистратура тесті</span>
+    <span class="ru">Тест для магистратуры</span>
+  </div>
+
+  <div class="lang">
+    <button class="active" type="button" data-lang="kk">KZ</button>
+    <button type="button" data-lang="ru">RU</button>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section>
+  <div class="hero">
+    <h1>
+      <span class="kk">Магистратура тесті: сыни ойлау, аналитикалық ойлау және ағылшын тілі</span>
+      <span class="ru">Тест для магистратуры: критическое мышление, аналитическое мышление и английский язык</span>
+    </h1>
+
+    <p class="lead">
+      <span class="kk">Интерактивті тест форматы. Әр бөлім бойынша нәтижені бөлек және жалпы көруге болады.</span>
+      <span class="ru">Интерактивный тестовый формат. Результат можно посмотреть отдельно по каждому блоку и общий балл.</span>
+    </p>
+
+    <div class="noticeGrid">
+      <div class="notice">
+        <b>
+          <span class="kk">Тегін материал</span>
+          <span class="ru">Бесплатный материал</span>
+        </b>
+        <br>
+        <span class="kk">Материал дайындық үшін берілген. Сатуға болмайды.</span>
+        <span class="ru">Материал предназначен для подготовки. Продавать нельзя.</span>
+      </div>
+
+      <div class="notice">
+        <b>Telegram</b>
+        <br>
+        <span class="kk">Осындай форматтағы тегін тесттер Telegram-каналда бар.</span>
+        <span class="ru">Бесплатные тесты в таком же формате есть в Telegram-канале.</span>
+        <br><br>
+        <a class="btn" href="https://t.me/+jtaSqR4E3CI2MjUy" target="_blank">Telegram</a>
+      </div>
+    </div>
+
+    <div class="cards">
+      <a href="#critical">
+        <span class="kk">Сыни ойлау</span>
+        <span class="ru">Критическое мышление</span>
+        <span>1–15</span>
+      </a>
+
+      <a href="#analytical">
+        <span class="kk">Аналитикалық ойлау</span>
+        <span class="ru">Аналитическое мышление</span>
+        <span>16–30</span>
+      </a>
+
+      <a href="#english">
+        <span class="kk">Ағылшын тілі</span>
+        <span class="ru">Английский язык</span>
+        <span>1–50</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="critical">
+  <h2>
+    <span class="kk">Сыни ойлау</span>
+    <span class="ru">Критическое мышление</span>
+  </h2>
+
+  <p class="lead">
+    <span class="kk">Математикалық және логикалық тапсырмалар.</span>
+    <span class="ru">Математические и логические задания.</span>
+  </p>
+
+  <div class="card" data-test="critical">
+    <h3>1–15</h3>
+    <div id="criticalQuestions"></div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="checkTest('critical')">
+        <span class="kk">Нәтижені көрсету</span>
+        <span class="ru">Показать результат</span>
+      </button>
+
+      <button class="btn secondary" type="button" onclick="resetTest('critical')">
+        <span class="kk">Қайта өту</span>
+        <span class="ru">Пройти заново</span>
+      </button>
+    </div>
+
+    <div class="result" id="criticalResult"></div>
+  </div>
+</section>
+
+<section id="analytical">
+  <h2>
+    <span class="kk">Аналитикалық ойлау</span>
+    <span class="ru">Аналитическое мышление</span>
+  </h2>
+
+  <div class="card" data-test="analytical">
+    <div id="analyticalQuestions"></div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="checkTest('analytical')">
+        <span class="kk">Нәтижені көрсету</span>
+        <span class="ru">Показать результат</span>
+      </button>
+
+      <button class="btn secondary" type="button" onclick="resetTest('analytical')">
+        <span class="kk">Қайта өту</span>
+        <span class="ru">Пройти заново</span>
+      </button>
+    </div>
+
+    <div class="result" id="analyticalResult"></div>
+  </div>
+</section>
+
+<section id="english">
+  <h2>
+    <span class="kk">Ағылшын тілі</span>
+    <span class="ru">Английский язык</span>
+  </h2>
+
+  <div id="englishBlock"></div>
+</section>
+
+<section>
+  <div class="overall">
+    <h2>
+      <span class="kk">Жалпы нәтиже</span>
+      <span class="ru">Общий результат</span>
+    </h2>
+
+    <p class="lead">
+      <span class="kk">Барлық бөлімді тексерген соң жалпы балды көріңіз.</span>
+      <span class="ru">После проверки всех разделов посмотрите общий балл.</span>
+    </p>
+
+    <button class="btn" type="button" onclick="showOverall()">
+      <span class="kk">Жалпы балды көрсету</span>
+      <span class="ru">Показать общий балл</span>
+    </button>
+
+    <div class="result" id="overallResult"></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const state = {
+  scores:{
+    critical:null,
+    analytical:null,
+    englishListening:null,
+    englishGrammar:null,
+    englishReading:null
+  }
+};
+
+const letters = ["A","B","C","D","E"];
+
+function currentLang(){
+  return document.body.classList.contains("lang-ru") ? "ru" : "kk";
+}
+
+function t(obj){
+  if(typeof obj === "string") return obj;
+  return obj[currentLang()] || obj.kk || obj.ru || "";
+}
+
+function setLang(lang){
+  document.body.classList.toggle("lang-kk", lang === "kk");
+  document.body.classList.toggle("lang-ru", lang === "ru");
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll(".lang button").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.lang === lang);
+  });
+
+  rerenderAll();
+}
+
+document.querySelectorAll(".lang button").forEach(btn=>{
+  btn.addEventListener("click",()=>setLang(btn.dataset.lang));
+});
+
+function renderQuestion(testKey,q){
+  return `
+    <div class="q" data-id="${q.id}" data-answer="${q.answer}">
+      <p class="qt">${q.id}. ${t(q.question)}</p>
+      ${q.figure ? q.figure : ""}
+      ${q.extra ? t(q.extra) : ""}
+      <div class="opts">
+        ${q.options.map((op,i)=>`
+          <label class="op" data-value="${letters[i]}">
+            <input type="radio" name="${testKey}_${q.id}" value="${letters[i]}">
+            <span><b>${letters[i]})</b> ${t(op)}</span>
+          </label>
+        `).join("")}
+      </div>
+
+      <div class="exp">
+        <b>
+          <span class="kk">Түсіндірме</span>
+          <span class="ru">Объяснение</span>
+        </b>
+        <ol class="steps">
+          ${(currentLang()==="kk" ? q.explain.kk : q.explain.ru).map(x=>`<li>${x}</li>`).join("")}
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+function checkTest(testKey){
+  const card = document.querySelector(`[data-test="${testKey}"]`);
+  let correct = 0;
+  const questions = card.querySelectorAll(".q");
+
+  questions.forEach(q=>{
+    const answer = q.dataset.answer;
+    const checked = q.querySelector("input:checked");
+
+    q.classList.add("show");
+    q.classList.remove("correct","wrong");
+
+    q.querySelectorAll(".op").forEach(op=>{
+      op.classList.remove("good","bad");
+      if(op.dataset.value === answer) op.classList.add("good");
+    });
+
+    if(checked && checked.value === answer){
+      correct++;
+      q.classList.add("correct");
+    }else{
+      q.classList.add("wrong");
+      if(checked) checked.closest(".op").classList.add("bad");
+    }
+  });
+
+  state.scores[testKey] = {
+    correct:correct,
+    total:questions.length
+  };
+
+  const result = document.getElementById(testKey+"Result");
+  if(result){
+    result.innerHTML = currentLang()==="kk"
+      ? `Нәтиже: ${correct} / ${questions.length}`
+      : `Результат: ${correct} / ${questions.length}`;
+  }
+}
+
+function resetTest(testKey){
+  const card = document.querySelector(`[data-test="${testKey}"]`);
+
+  card.querySelectorAll("input").forEach(input=>input.checked=false);
+  card.querySelectorAll(".q").forEach(q=>q.classList.remove("show","correct","wrong"));
+  card.querySelectorAll(".op").forEach(op=>op.classList.remove("good","bad"));
+
+  const result = document.getElementById(testKey+"Result");
+  if(result) result.innerHTML = "";
+
+  state.scores[testKey] = null;
+}
+
+function showOverall(){
+  let correct = 0;
+  let total = 0;
+
+  Object.values(state.scores).forEach(score=>{
+    if(score){
+      correct += score.correct;
+      total += score.total;
+    }
+  });
+
+  document.getElementById("overallResult").innerHTML = currentLang()==="kk"
+    ? `Жалпы балл: ${correct} / ${total}`
+    : `Общий балл: ${correct} / ${total}`;
+}
+  const pieMeal = `
+<div class="svgBox">
+  <svg width="430" height="245" viewBox="0 0 430 245" aria-label="meal chart">
+    <text x="170" y="22" font-size="17" font-weight="700">
+      <tspan class="kk">Тамақтану мөлшері</tspan>
+      <tspan class="ru">Распределение питания</tspan>
+    </text>
+
+    <circle cx="150" cy="125" r="70" fill="#e5e7eb"></circle>
+
+    <path d="M150 125 L150 55 A70 70 0 0 1 216.6 103.4 Z" fill="#0ea5e9"></path>
+    <path d="M150 125 L216.6 103.4 A70 70 0 0 1 191.1 181.6 Z" fill="#2563eb"></path>
+    <path d="M150 125 L191.1 181.6 A70 70 0 1 1 108.9 68.4 Z" fill="#16a34a"></path>
+    <path d="M150 125 L108.9 68.4 A70 70 0 0 1 150 55 Z" fill="#86efac"></path>
+
+    <text x="178" y="92" font-size="14">25%</text>
+    <text x="185" y="145" font-size="14">15%</text>
+    <text x="92" y="143" font-size="14">45%</text>
+    <text x="116" y="80" font-size="14">15%</text>
+
+    <rect x="280" y="63" width="12" height="12" fill="#0ea5e9"></rect>
+    <text x="300" y="74" font-size="13">
+      <tspan class="kk">Таңғы ас</tspan>
+      <tspan class="ru">Завтрак</tspan>
+    </text>
+
+    <rect x="280" y="98" width="12" height="12" fill="#2563eb"></rect>
+    <text x="300" y="109" font-size="13">
+      <tspan class="kk">Екінші тамақтану</tspan>
+      <tspan class="ru">Второй приём пищи</tspan>
+    </text>
+
+    <rect x="280" y="133" width="12" height="12" fill="#16a34a"></rect>
+    <text x="300" y="144" font-size="13">
+      <tspan class="kk">Түскі ас</tspan>
+      <tspan class="ru">Обед</tspan>
+    </text>
+
+    <rect x="280" y="168" width="12" height="12" fill="#86efac"></rect>
+    <text x="300" y="179" font-size="13">
+      <tspan class="kk">Кешкі ас</tspan>
+      <tspan class="ru">Ужин</tspan>
+    </text>
+  </svg>
+</div>
+`;
+
+function rateGraph(){
+  return `
+  <div class="svgBox">
+    <svg width="540" height="260" viewBox="0 0 540 260" aria-label="rate graph">
+      <text x="130" y="24" font-size="15" font-weight="700">
+        <tspan class="kk">АҚШ долларының теңгеге қатысты бағамы</tspan>
+        <tspan class="ru">Курс доллара США к тенге</tspan>
+      </text>
+
+      <line x1="55" y1="205" x2="500" y2="205" stroke="#334155"></line>
+      <line x1="55" y1="45" x2="55" y2="205" stroke="#334155"></line>
+
+      <g stroke="#e5e7eb">
+        <line x1="55" y1="180" x2="500" y2="180"></line>
+        <line x1="55" y1="155" x2="500" y2="155"></line>
+        <line x1="55" y1="130" x2="500" y2="130"></line>
+        <line x1="55" y1="105" x2="500" y2="105"></line>
+        <line x1="55" y1="80" x2="500" y2="80"></line>
+        <line x1="55" y1="55" x2="500" y2="55"></line>
+      </g>
+
+      <g font-size="10" fill="#475467">
+        <text x="25" y="208">314</text>
+        <text x="25" y="183">316</text>
+        <text x="25" y="158">318</text>
+        <text x="25" y="133">320</text>
+        <text x="25" y="108">322</text>
+        <text x="25" y="83">324</text>
+        <text x="25" y="58">326</text>
+      </g>
+
+      <polyline points="80,170 125,170 170,155 215,94 260,55 305,75 350,112 395,112 440,112 485,75" fill="none" stroke="#60a5fa" stroke-width="3"></polyline>
+
+      <g fill="#60a5fa">
+        <circle cx="80" cy="170" r="3"></circle>
+        <circle cx="125" cy="170" r="3"></circle>
+        <circle cx="170" cy="155" r="3"></circle>
+        <circle cx="215" cy="94" r="3"></circle>
+        <circle cx="260" cy="55" r="3"></circle>
+        <circle cx="305" cy="75" r="3"></circle>
+        <circle cx="350" cy="112" r="3"></circle>
+        <circle cx="395" cy="112" r="3"></circle>
+        <circle cx="440" cy="112" r="3"></circle>
+        <circle cx="485" cy="75" r="3"></circle>
+      </g>
+
+      <g font-size="9" fill="#475467">
+        <text x="60" y="228">06.04</text>
+        <text x="105" y="228">09.04</text>
+        <text x="150" y="228">10.04</text>
+        <text x="195" y="228">11.04</text>
+        <text x="240" y="228">12.04</text>
+        <text x="285" y="228">13.04</text>
+        <text x="330" y="228">14.04</text>
+        <text x="375" y="228">15.04</text>
+        <text x="420" y="228">16.04</text>
+        <text x="465" y="228">17.04</text>
+      </g>
+    </svg>
+  </div>
+  `;
+}
+
+function energyGraph(){
+  return `
+  <div class="svgBox">
+    <svg width="430" height="260" viewBox="0 0 430 260" aria-label="energy graph">
+      <text x="95" y="24" font-size="15" font-weight="700">
+        <tspan class="kk">Электр энергиясы шығыны</tspan>
+        <tspan class="ru">Расход электроэнергии</tspan>
+      </text>
+
+      <line x1="50" y1="215" x2="380" y2="215" stroke="#334155"></line>
+      <line x1="50" y1="45" x2="50" y2="215" stroke="#334155"></line>
+
+      <g stroke="#e5e7eb">
+        <line x1="50" y1="185" x2="380" y2="185"></line>
+        <line x1="50" y1="155" x2="380" y2="155"></line>
+        <line x1="50" y1="125" x2="380" y2="125"></line>
+        <line x1="50" y1="95" x2="380" y2="95"></line>
+        <line x1="50" y1="65" x2="380" y2="65"></line>
+      </g>
+
+      <polyline points="75,190 105,178 135,166 165,146 195,132 225,118 255,103 285,87 315,70" fill="none" stroke="#60a5fa" stroke-width="3"></polyline>
+
+      <g fill="#60a5fa">
+        <circle cx="75" cy="190" r="3"></circle>
+        <circle cx="105" cy="178" r="3"></circle>
+        <circle cx="135" cy="166" r="3"></circle>
+        <circle cx="165" cy="146" r="3"></circle>
+        <circle cx="195" cy="132" r="3"></circle>
+        <circle cx="225" cy="118" r="3"></circle>
+        <circle cx="255" cy="103" r="3"></circle>
+        <circle cx="285" cy="87" r="3"></circle>
+        <circle cx="315" cy="70" r="3"></circle>
+      </g>
+
+      <g font-size="9" fill="#475467">
+        <text x="68" y="236">Қаң.</text>
+        <text x="98" y="236">Ақп.</text>
+        <text x="128" y="236">Нау.</text>
+        <text x="158" y="236">Сәу.</text>
+        <text x="188" y="236">Мам.</text>
+        <text x="218" y="236">Мау.</text>
+        <text x="248" y="236">Шіл.</text>
+        <text x="278" y="236">Там.</text>
+        <text x="308" y="236">Қыр.</text>
+      </g>
+    </svg>
+  </div>
+  `;
+}
+
+function cellFigure(){
+  let rows = [];
+  const counts = [5,7,9,11,9,7,5];
+  counts.forEach((count,r)=>{
+    const start = (11-count)/2;
+    for(let c=0;c<count;c++){
+      rows.push(`<rect x="${50+(start+c)*14}" y="${16+r*14}" width="14" height="14" fill="white" stroke="#334155"></rect>`);
+    }
+  });
+  return `<div class="svgBox"><svg width="260" height="140" viewBox="0 0 260 140">${rows.join("")}</svg></div>`;
+}
+
+function functionGraph(){
+  return `
+  <div class="svgBox">
+    <svg width="460" height="260" viewBox="0 0 460 260" aria-label="function graph">
+      <line x1="60" y1="160" x2="410" y2="160" stroke="#334155"></line>
+      <line x1="190" y1="30" x2="190" y2="220" stroke="#334155"></line>
+      <text x="415" y="164" font-size="13">x</text>
+      <text x="196" y="38" font-size="13">y</text>
+      <text x="196" y="176" font-size="13">O</text>
+
+      <path d="M80 35 C100 130 120 215 160 196 C185 184 190 160 210 118 C230 76 255 38 283 55 C310 72 335 122 345 195" fill="none" stroke="#111827" stroke-width="3"></path>
+
+      <circle cx="160" cy="196" r="5" fill="#111827"></circle>
+      <circle cx="190" cy="130" r="5" fill="#111827"></circle>
+      <circle cx="266" cy="54" r="5" fill="#111827"></circle>
+
+      <text x="120" y="220" font-size="14">(a,-2)</text>
+      <text x="154" y="120" font-size="14">(0,1)</text>
+      <text x="276" y="50" font-size="14">(b,3)</text>
+      <text x="287" y="95" font-size="14">y=g(x)</text>
+
+      <table class="tbl" style="display:none"></table>
+    </svg>
+  </div>
+
+  <table class="tbl">
+    <tr>
+      <th>A <span class="kk">шамасы</span><span class="ru">величина</span></th>
+      <th>B <span class="kk">шамасы</span><span class="ru">величина</span></th>
+    </tr>
+    <tr>
+      <td>
+        <span class="kk">Функцияның (0; b) аралығындағы мәні</span>
+        <span class="ru">Значение функции на промежутке (0; b)</span>
+      </td>
+      <td>
+        <span class="kk">Функцияның (a; 0) аралығындағы мәні</span>
+        <span class="ru">Значение функции на промежутке (a; 0)</span>
+      </td>
+    </tr>
+  </table>
+  `;
+}
+
+const criticalQuestions = [
+  {
+    id:1,
+    answer:"A",
+    question:{
+      kk:"Дәрігер адамға қажетті бір күндік тамақ мөлшерінің пайыздық көрсеткішін диаграммамен берді. Түскі астан басқа астарға сәйкес келетін бөліктің градустық өлшемін табыңыз.",
+      ru:"Врач дал круговую диаграмму дневной нормы питания. Найдите градусную меру части, соответствующей всем приёмам пищи, кроме обеда."
+    },
+    figure:pieMeal,
+    options:[
+      {kk:"198°",ru:"198°"},
+      {kk:"30°",ru:"30°"},
+      {kk:"54°",ru:"54°"},
+      {kk:"90°",ru:"90°"},
+      {kk:"162°",ru:"162°"}
+    ],
+    explain:{
+      kk:[
+        "Диаграммада түскі ас 45% деп берілген.",
+        "Түскі астан басқа бөлік: 100% − 45% = 55%.",
+        "Толық шеңбер 360° болғандықтан, 360° · 0,55 = 198°.",
+        "Дұрыс жауап — 198°."
+      ],
+      ru:[
+        "На диаграмме обед составляет 45%.",
+        "Все остальные приёмы пищи: 100% − 45% = 55%.",
+        "Полный круг равен 360°, значит 360° · 0,55 = 198°.",
+        "Правильный ответ — 198°."
+      ]
+    }
+  },
+  {
+    id:2,
+    answer:"A",
+    question:{
+      kk:"Оқушы 16 есепті шығару керек еді. Әрбір шығарылған есеп үшін 5 ұпай қосылады, ал шығарылмаған есеп үшін 3 ұпай азайтылады. Нәтижесінде оқушы 0 ұпай алған болса, оқушы неше есеп шығарған?",
+      ru:"Ученик должен был решить 16 задач. За каждую решённую задачу добавляют 5 баллов, а за нерешённую вычитают 3 балла. В итоге он получил 0 баллов. Сколько задач он решил?"
+    },
+    options:[
+      {kk:"6",ru:"6"},
+      {kk:"5",ru:"5"},
+      {kk:"7",ru:"7"},
+      {kk:"8",ru:"8"},
+      {kk:"9",ru:"9"}
+    ],
+    explain:{
+      kk:[
+        "Шығарған есеп санын x деп аламыз.",
+        "Шығарылмаған есеп саны: 16 − x.",
+        "Ұпай теңдеуі: 5x − 3(16 − x) = 0.",
+        "5x − 48 + 3x = 0, яғни 8x = 48.",
+        "x = 6. Дұрыс жауап — 6."
+      ],
+      ru:[
+        "Пусть x — количество решённых задач.",
+        "Тогда нерешённых задач: 16 − x.",
+        "Составляем уравнение: 5x − 3(16 − x) = 0.",
+        "5x − 48 + 3x = 0, значит 8x = 48.",
+        "x = 6. Правильный ответ — 6."
+      ]
+    }
+  },
+  {
+    id:3,
+    answer:"A",
+    question:{
+      kk:"Теңбүйірлі тікбұрышты үшбұрыштың ауданы 2 см² болса, онда оның бүйір қабырғасының ұзындығы қандай?",
+      ru:"Площадь равнобедренного прямоугольного треугольника равна 2 см². Найдите длину его катета."
+    },
+    options:[
+      {kk:"2 см",ru:"2 см"},
+      {kk:"0,6 см",ru:"0,6 см"},
+      {kk:"0,8 см",ru:"0,8 см"},
+      {kk:"1,6 см",ru:"1,6 см"},
+      {kk:"4 см",ru:"4 см"}
+    ],
+    explain:{
+      kk:[
+        "Теңбүйірлі тікбұрышты үшбұрышта екі катет тең болады: a және a.",
+        "Аудан формуласы: S = a² / 2.",
+        "2 = a² / 2, сондықтан a² = 4.",
+        "a = 2 см. Дұрыс жауап — 2 см."
+      ],
+      ru:[
+        "В равнобедренном прямоугольном треугольнике катеты равны: a и a.",
+        "Формула площади: S = a² / 2.",
+        "2 = a² / 2, поэтому a² = 4.",
+        "a = 2 см. Правильный ответ — 2 см."
+      ]
+    }
+  },
+  {
+    id:4,
+    answer:"A",
+    question:{
+      kk:"Егер 567·92 = p болса, 567·91 өрнегінің мәнін табыңыз.",
+      ru:"Если 567·92 = p, найдите значение выражения 567·91."
+    },
+    options:[
+      {kk:"p − 567",ru:"p − 567"},
+      {kk:"p + 567",ru:"p + 567"},
+      {kk:"p + 1",ru:"p + 1"},
+      {kk:"p + 67",ru:"p + 67"},
+      {kk:"p − 1",ru:"p − 1"}
+    ],
+    explain:{
+      kk:[
+        "567·91 = 567·(92 − 1).",
+        "Жақшаны ашамыз: 567·92 − 567.",
+        "567·92 = p деп берілген.",
+        "Сондықтан 567·91 = p − 567."
+      ],
+      ru:[
+        "567·91 = 567·(92 − 1).",
+        "Раскрываем скобки: 567·92 − 567.",
+        "По условию 567·92 = p.",
+        "Значит 567·91 = p − 567."
+      ]
+    }
+  },
+  {
+    id:5,
+    answer:"A",
+    question:{
+      kk:"Анасының жасы 34-те, қызының жасы 8-де. Неше жылдан кейін анасының жасы қызының жасынан екі еселенеді?",
+      ru:"Матери 34 года, дочери 8 лет. Через сколько лет возраст матери будет в два раза больше возраста дочери?"
+    },
+    options:[
+      {kk:"18",ru:"18"},
+      {kk:"8",ru:"8"},
+      {kk:"16",ru:"16"},
+      {kk:"34",ru:"34"},
+      {kk:"42",ru:"42"}
+    ],
+    explain:{
+      kk:[
+        "x жылдан кейін анасының жасы 34 + x болады.",
+        "x жылдан кейін қызының жасы 8 + x болады.",
+        "Шарт бойынша: 34 + x = 2(8 + x).",
+        "34 + x = 16 + 2x, сондықтан x = 18.",
+        "Дұрыс жауап — 18."
+      ],
+      ru:[
+        "Через x лет матери будет 34 + x.",
+        "Через x лет дочери будет 8 + x.",
+        "По условию: 34 + x = 2(8 + x).",
+        "34 + x = 16 + 2x, значит x = 18.",
+        "Правильный ответ — 18."
+      ]
+    }
+  },
+  {
+    id:6,
+    answer:"A",
+    question:{
+      kk:"Келесі диаграммада АҚШ долларының теңгеге қатысты бағамы келтірілген. 17.04.2018 жылы доллар 12.04.2018 жылға қарағанда неше %-ға арзандады?",
+      ru:"На диаграмме показан курс доллара США к тенге. На сколько процентов доллар 17.04.2018 стал дешевле по сравнению с 12.04.2018?"
+    },
+    figure:rateGraph(),
+    options:[
+      {kk:"0,26%",ru:"0,26%"},
+      {kk:"0,12%",ru:"0,12%"},
+      {kk:"0,83%",ru:"0,83%"},
+      {kk:"1,43%",ru:"1,43%"},
+      {kk:"3,04%",ru:"3,04%"}
+    ],
+    explain:{
+      kk:[
+        "Графиктен 12.04 және 17.04 күндеріндегі мәндерді салыстырамыз.",
+        "17.04 күніндегі көрсеткіш 12.04 күніндегі көрсеткіштен сәл төмен.",
+        "Пайыздық төмендеу формуласы: айырма / бастапқы мән · 100%.",
+        "Берілген жауаптардың ішінде сәйкес мән — 0,26%."
+      ],
+      ru:[
+        "Сравниваем значения на графике за 12.04 и 17.04.",
+        "Значение 17.04 немного ниже значения 12.04.",
+        "Формула процентного снижения: разница / начальное значение · 100%.",
+        "Из предложенных вариантов подходит 0,26%."
+      ]
+    }
+  },
+  {
+    id:7,
+    answer:"A",
+    question:{
+      kk:"Графикте жыл барысындағы шағын кәсіпорынның электр энергиясы шығыны көрсетілген. Көктемнің бірінші айындағы шығын мөлшері қандай?",
+      ru:"На графике показан расход электроэнергии малого предприятия за год. Каков расход в первом месяце весны?"
+    },
+    figure:energyGraph(),
+    options:[
+      {kk:"1500 кВт",ru:"1500 кВт"},
+      {kk:"1400 кВт",ru:"1400 кВт"},
+      {kk:"1200 кВт",ru:"1200 кВт"},
+      {kk:"1100 кВт",ru:"1100 кВт"},
+      {kk:"1300 кВт",ru:"1300 кВт"}
+    ],
+    explain:{
+      kk:[
+        "Көктемнің бірінші айы — наурыз.",
+        "Графикте наурыз айындағы нүкте 1500 кВт деңгейінде көрсетілген.",
+        "Сондықтан дұрыс жауап — 1500 кВт."
+      ],
+      ru:[
+        "Первый месяц весны — март.",
+        "На графике точка марта соответствует 1500 кВт.",
+        "Поэтому правильный ответ — 1500 кВт."
+      ]
+    }
+  },
+  {
+    id:8,
+    answer:"A",
+    question:{
+      kk:"Кестеде жердегі жан-жануарлар түрі жөнінде мәлімет көрсетілген. Бауырымен жорғалаушылардың ең жуық пайыздық көрсеткіші қандай?",
+      ru:"В таблице даны сведения о видах животных. Найдите приблизительный процент пресмыкающихся."
+    },
+    extra:{
+      kk:`
+      <table class="tbl">
+        <tr><th>№</th><th>Атауы</th><th>Саны (мың)</th></tr>
+        <tr><td>1</td><td>Сүт қоректілер</td><td>4</td></tr>
+        <tr><td>2</td><td>Құстар</td><td>8,6</td></tr>
+        <tr><td>3</td><td>Бауырымен жорғалаушылар</td><td>6</td></tr>
+        <tr><td>4</td><td>Қос мекенділер</td><td>3,4</td></tr>
+        <tr><td>5</td><td>Балықтар</td><td>20</td></tr>
+        <tr><td colspan="2">Барлығы</td><td>42</td></tr>
+      </table>`,
+      ru:`
+      <table class="tbl">
+        <tr><th>№</th><th>Вид</th><th>Количество (тыс.)</th></tr>
+        <tr><td>1</td><td>Млекопитающие</td><td>4</td></tr>
+        <tr><td>2</td><td>Птицы</td><td>8,6</td></tr>
+        <tr><td>3</td><td>Пресмыкающиеся</td><td>6</td></tr>
+        <tr><td>4</td><td>Земноводные</td><td>3,4</td></tr>
+        <tr><td>5</td><td>Рыбы</td><td>20</td></tr>
+        <tr><td colspan="2">Всего</td><td>42</td></tr>
+      </table>`
+    },
+    options:[
+      {kk:"14%",ru:"14%"},
+      {kk:"9%",ru:"9%"},
+      {kk:"10%",ru:"10%"},
+      {kk:"19%",ru:"19%"},
+      {kk:"20%",ru:"20%"}
+    ],
+    explain:{
+      kk:[
+        "Бауырымен жорғалаушылар саны — 6 мың.",
+        "Барлығы — 42 мың.",
+        "Пайызын табамыз: 6 / 42 · 100% ≈ 14,3%.",
+        "Ең жуық жауап — 14%."
+      ],
+      ru:[
+        "Количество пресмыкающихся — 6 тысяч.",
+        "Всего — 42 тысячи.",
+        "Находим процент: 6 / 42 · 100% ≈ 14,3%.",
+        "Ближайший ответ — 14%."
+      ]
+    }
+  },
+  {
+    id:9,
+    answer:"A",
+    question:{
+      kk:"Төмендегі фигурадағы шаршының ауданы 3 см² болса, фигураның ауданын табыңыз.",
+      ru:"Если площадь одного квадрата в фигуре равна 3 см², найдите площадь всей фигуры."
+    },
+    figure:cellFigure(),
+    options:[
+      {kk:"105 см²",ru:"105 см²"},
+      {kk:"75 см²",ru:"75 см²"},
+      {kk:"90 см²",ru:"90 см²"},
+      {kk:"102 см²",ru:"102 см²"},
+      {kk:"112 см²",ru:"112 см²"}
+    ],
+    explain:{
+      kk:[
+        "Фигура кішкентай шаршылардан құралған.",
+        "Фигурада 35 шаршы бар.",
+        "Бір шаршының ауданы 3 см².",
+        "Жалпы аудан: 35 · 3 = 105 см²."
+      ],
+      ru:[
+        "Фигура состоит из маленьких квадратов.",
+        "В фигуре 35 квадратов.",
+        "Площадь одного квадрата равна 3 см².",
+        "Общая площадь: 35 · 3 = 105 см²."
+      ]
+    }
+  },
+  {
+    id:10,
+    answer:"A",
+    question:{
+      kk:"Ылғалды бөлмеде тұрған бір қап қанттың бастапқы салмағы 30% артты. Осы қант қайтадан салмағы 30% кемігенге дейін кептірілген. Сонда ол бастапқы салмағына қаншалықты жуықтайды?",
+      ru:"Мешок сахара во влажной комнате стал на 30% тяжелее начального веса. Затем его высушили так, что вес уменьшился на 30%. Каким стал вес относительно начального?"
+    },
+    options:[
+      {kk:"бастапқы салмағынан 9% кем",ru:"на 9% меньше начального веса"},
+      {kk:"бастапқы салмағынан 5% кем",ru:"на 5% меньше начального веса"},
+      {kk:"бастапқы салмағынан 6% кем",ru:"на 6% меньше начального веса"},
+      {kk:"бастапқы салмағынан 5% артық",ru:"на 5% больше начального веса"},
+      {kk:"бастапқы салмағынан 9% артық",ru:"на 9% больше начального веса"}
+    ],
+    explain:{
+      kk:[
+        "Бастапқы салмақты 100 деп аламыз.",
+        "30% артқанда: 100 · 1,3 = 130.",
+        "Кейін 30% кемісе: 130 · 0,7 = 91.",
+        "91 бастапқы 100-ден 9% кем.",
+        "Дұрыс жауап — бастапқы салмағынан 9% кем."
+      ],
+      ru:[
+        "Пусть начальный вес равен 100.",
+        "После увеличения на 30%: 100 · 1,3 = 130.",
+        "После уменьшения на 30%: 130 · 0,7 = 91.",
+        "91 на 9% меньше начального веса 100.",
+        "Правильный ответ — на 9% меньше начального веса."
+      ]
+    }
+  },
+  {
+    id:11,
+    answer:"A",
+    question:{
+      kk:"Егер 2x − 3 > 1 болса, x-тің ең кіші бүтін мәні қандай?",
+      ru:"Если 2x − 3 > 1, найдите наименьшее целое значение x."
+    },
+    options:[
+      {kk:"3",ru:"3"},
+      {kk:"2",ru:"2"},
+      {kk:"4",ru:"4"},
+      {kk:"5",ru:"5"},
+      {kk:"6",ru:"6"}
+    ],
+    explain:{
+      kk:[
+        "Теңсіздік: 2x − 3 > 1.",
+        "Екі жаққа 3 қосамыз: 2x > 4.",
+        "2-ге бөлеміз: x > 2.",
+        "x-тің 2-ден үлкен ең кіші бүтін мәні — 3."
+      ],
+      ru:[
+        "Дано неравенство: 2x − 3 > 1.",
+        "Прибавляем 3 к обеим частям: 2x > 4.",
+        "Делим на 2: x > 2.",
+        "Наименьшее целое число больше 2 — это 3."
+      ]
+    }
+  },
+  {
+    id:12,
+    answer:"A",
+    question:{
+      kk:"a > 1 және ∛a / a² = aᵏ. A шамасы — k, B шамасы — −5/3. Салыстырыңыз.",
+      ru:"a > 1 и ∛a / a² = aᵏ. Величина A — k, величина B — −5/3. Сравните."
+    },
+    extra:{
+      kk:`
+      <table class="tbl">
+        <tr><th>Берілгені</th><td>a &gt; 1 және <span class="frac"><span>∛a</span><span>a²</span></span> = aᵏ</td></tr>
+        <tr><th>A шамасы</th><th>B шамасы</th></tr>
+        <tr><td>k</td><td>−5/3</td></tr>
+      </table>`,
+      ru:`
+      <table class="tbl">
+        <tr><th>Дано</th><td>a &gt; 1 и <span class="frac"><span>∛a</span><span>a²</span></span> = aᵏ</td></tr>
+        <tr><th>Величина A</th><th>Величина B</th></tr>
+        <tr><td>k</td><td>−5/3</td></tr>
+      </table>`
+    },
+    options:[
+      {kk:"A шамасы B шамасына тең",ru:"A равна B"},
+      {kk:"Екі еселенген A шамасы B шамасына тең",ru:"Удвоенная A равна B"},
+      {kk:"A шамасы B шамасынан үлкен",ru:"A больше B"},
+      {kk:"A шамасы B шамасынан кіші",ru:"A меньше B"},
+      {kk:"A шамасы мен B шамасын салыстыруға мәлімет жеткіліксіз",ru:"Недостаточно данных для сравнения A и B"}
+    ],
+    explain:{
+      kk:[
+        "∛a = a^(1/3).",
+        "∛a / a² = a^(1/3) / a² = a^(1/3 − 2).",
+        "1/3 − 2 = 1/3 − 6/3 = −5/3.",
+        "Демек k = −5/3.",
+        "A = k = −5/3, B = −5/3. Сондықтан A = B."
+      ],
+      ru:[
+        "∛a = a^(1/3).",
+        "∛a / a² = a^(1/3) / a² = a^(1/3 − 2).",
+        "1/3 − 2 = 1/3 − 6/3 = −5/3.",
+        "Значит k = −5/3.",
+        "A = k = −5/3, B = −5/3. Поэтому A = B."
+      ]
+    }
+  },
+  {
+    id:13,
+    answer:"A",
+    question:{
+      kk:"Бірінші ыдыста екінші ыдысқа қарағанда 2 есе аз су болған. Бірінші ыдыстан 500 г су, ал екінші ыдыстан 6 л су алғаннан кейін, екінші ыдыста бірінші ыдысқа қарағанда 60% артық су қалды. Алғашқы бірінші ыдыста неше литр су болған?",
+      ru:"В первом сосуде было в 2 раза меньше воды, чем во втором. Из первого сосуда взяли 500 г воды, а из второго — 6 л. После этого во втором сосуде осталось на 60% больше воды, чем в первом. Сколько литров воды было в первом сосуде сначала?"
+    },
+    options:[
+      {kk:"13 л",ru:"13 л"},
+      {kk:"18 л",ru:"18 л"},
+      {kk:"20 л",ru:"20 л"},
+      {kk:"26 л",ru:"26 л"},
+      {kk:"28 л",ru:"28 л"}
+    ],
+    explain:{
+      kk:[
+        "Бірінші ыдыста бастапқыда x л су болды дейік.",
+        "Екінші ыдыста екі есе көп: 2x л.",
+        "500 г су = 0,5 л.",
+        "Қалғаны: біріншіде x − 0,5, екіншіде 2x − 6.",
+        "Екіншіде біріншіге қарағанда 60% артық: 2x − 6 = 1,6(x − 0,5).",
+        "2x − 6 = 1,6x − 0,8, сондықтан 0,4x = 5,2.",
+        "x = 13. Дұрыс жауап — 13 л."
+      ],
+      ru:[
+        "Пусть в первом сосуде сначала было x л.",
+        "Во втором сосуде было в два раза больше: 2x л.",
+        "500 г воды = 0,5 л.",
+        "Осталось: в первом x − 0,5, во втором 2x − 6.",
+        "Во втором осталось на 60% больше: 2x − 6 = 1,6(x − 0,5).",
+        "2x − 6 = 1,6x − 0,8, значит 0,4x = 5,2.",
+        "x = 13. Правильный ответ — 13 л."
+      ]
+    }
+  },
+  {
+    id:14,
+    answer:"A",
+    question:{
+      kk:"Егер a + 1 жұп сан болса, онда төмендегі сандардың ішінен тақ емес санды табыңыз.",
+      ru:"Если a + 1 — чётное число, найдите среди выражений нечётное."
+    },
+    options:[
+      {kk:"a − 5",ru:"a − 5"},
+      {kk:"(4a − 3)³",ru:"(4a − 3)³"},
+      {kk:"a",ru:"a"},
+      {kk:"a + 2",ru:"a + 2"},
+      {kk:"a³ + 4",ru:"a³ + 4"}
+    ],
+    explain:{
+      kk:[
+        "a + 1 жұп болса, онда a тақ сан болады.",
+        "a − 5: тақ − тақ = жұп.",
+        "Скриндегі дұрыс белгіленген жауап — a − 5.",
+        "Сондықтан осы нұсқа алынады."
+      ],
+      ru:[
+        "Если a + 1 чётное, то a нечётное.",
+        "a − 5: нечётное − нечётное = чётное.",
+        "На скрине правильным отмечен вариант a − 5.",
+        "Поэтому в тесте выбран ответ a − 5."
+      ]
+    }
+  },
+  {
+    id:15,
+    answer:"A",
+    question:{
+      kk:"График бойынша A шамасы — функцияның (0; b) аралығындағы мәні, B шамасы — функцияның (a; 0) аралығындағы мәні. Салыстырыңыз.",
+      ru:"По графику A — значение функции на промежутке (0; b), B — значение функции на промежутке (a; 0). Сравните."
+    },
+    figure:functionGraph(),
+    options:[
+      {kk:"A шамасы B шамасынан үлкен",ru:"A больше B"},
+      {kk:"A шамасы B шамасынан кіші",ru:"A меньше B"},
+      {kk:"A шамасы мен B шамасын салыстыруға мәлімет жеткіліксіз",ru:"Недостаточно данных для сравнения A и B"},
+      {kk:"Екі еселенген A шамасы B шамасына тең",ru:"Удвоенная A равна B"},
+      {kk:"A шамасы B шамасына тең",ru:"A равна B"}
+    ],
+    explain:{
+      kk:[
+        "Графикте (a;0) аралығында функция төменгі нүктеден 1 мәніне дейін өседі.",
+        "(0;b) аралығында функция 1 мәнінен 3 мәніне дейін өседі.",
+        "Екінші аралықтағы өсім көбірек.",
+        "Сондықтан A шамасы B шамасынан үлкен."
+      ],
+      ru:[
+        "На промежутке (a;0) функция возрастает от нижней точки до значения 1.",
+        "На промежутке (0;b) функция возрастает от значения 1 до значения 3.",
+        "Рост на втором промежутке больше.",
+        "Поэтому A больше B."
+      ]
+    }
+  }
+];
+
+function renderCritical(){
+  document.getElementById("criticalQuestions").innerHTML =
+    criticalQuestions.map(q=>renderQuestion("critical",q)).join("");
+}
+  const analyticalKz = [
+  {
+    type:"question",
+    q:{
+      id:16,
+      answer:"A",
+      question:{kk:"Сөйлемді мағынасына сай толықтырыңыз: Құрманғазы — өмірдің ащы-тұщы сәттерін күй тілінде, өнер тілінде баяндауға _______."},
+      options:[
+        {kk:"жүйрік"},
+        {kk:"білгір"},
+        {kk:"алғыр"},
+        {kk:"негіздеді"},
+        {kk:"қосты"}
+      ],
+      explain:{
+        kk:[
+          "Сөйлемде Құрманғазының өмір көріністерін күй арқылы шебер жеткізе алатыны айтылып тұр.",
+          "«Жүйрік» сөзі бұл жерде «шебер, қабілетті, озық» мағынасында қолданылады.",
+          "Сондықтан сөйлемге ең мағыналы сөз — «жүйрік»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:17,
+      answer:"A",
+      question:{kk:"Өлеңді мағынасына сәйкес теңеу сөзбен толықтырыңыз: [...] бұрқ-сарқ етіп доланғанда, Алты қанат ақ орда үй шайқалды."},
+      options:[
+        {kk:"Борандай"},
+        {kk:"Боранды"},
+        {kk:"Тарсылдап"},
+        {kk:"Тарсылдамай"},
+        {kk:"Боранмен"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде қатты қозғалыс, долдану, шайқалу бейнесі берілген.",
+          "Осы мағынаға «борандай» теңеуі сәйкес келеді.",
+          "«Борандай» — боран сияқты қатты, екпінді деген мағына береді."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:18,
+      answer:"A",
+      question:{kk:"Көп нүктенің орнына сәйкес сөзді жазыңыз: Әрбір жақсы адамның жақсылық тапқанына рақаттанып күлсең, оның жақсылықты жақсылығынан тапқандығын _______ көріп күл."},
+      options:[
+        {kk:"ғибрат"},
+        {kk:"әдет"},
+        {kk:"талас"},
+        {kk:"тапсырып"},
+        {kk:"арман"}
+      ],
+      explain:{
+        kk:[
+          "Сөйлемде жақсы адамның жақсылығынан үлгі алу мағынасы бар.",
+          "«Ғибрат» — үлгі, өнеге, сабақ деген мағына береді.",
+          "Сондықтан дұрыс жауап — «ғибрат»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"text",
+    title:{kk:"Мәтін 1"},
+    text:{kk:`Бумын қаған — түркілердің өздері «Мәңгі ел» деп атаған әйгілі бірінші Шығыс түркі қағанатының негізін қалаушы тарихи ұлы тұлғалардың бірі. Оның алғаш тарихқа танылуы түркі еліне Батыс Вей империясы елшілерінің келуімен тікелей байланысты. Бұл кезде түркі елі Жужан қағанатының құрамындағы, соларға темір кенін өндірумен айналысатын бодан ел болатын. Бумынның бұл кездегі билік лауазымы — ұлы жабғу. Оған ол түркі елінің басшысы болған әкесі Ту өлгеннен кейін, мұрагерлік жолмен ие болған. Бумын — аса ірі саясаткер, көреген басшы. Ол алып империяның айдап салуына елігіп, билікке таласушылардың қолшоқпарына айналмай, өз саясатын жүргізе біледі.`}
+  },
+  {
+    type:"question",
+    q:{
+      id:19,
+      answer:"A",
+      question:{kk:"Берілген мәтіннің мақсатын анықтаңыз."},
+      options:[
+        {kk:"Бумын қағанның тарихта танылуын көрсету"},
+        {kk:"Шығыс түркі қағанатының қалыптасуын көрсету"},
+        {kk:"Түркі елінің тарихын құрметтеуге шақыру"},
+        {kk:"Вей империясын басқа елдерге таныту"},
+        {kk:"Жужан қағанатының қалыптасуын көрсету"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде Бумын қағанның кім екені, оның тарихқа қалай танылғаны баяндалады.",
+          "Негізгі ой — Бумын қағанның тарихи тұлға ретінде көрінуі.",
+          "Сондықтан мәтіннің мақсаты — Бумын қағанның тарихта танылуын көрсету."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:20,
+      answer:"A",
+      question:{kk:"Берілген мәтінге сәйкес тақырыпты таңдаңыз."},
+      options:[
+        {kk:"Бумын қаған"},
+        {kk:"Алып империя"},
+        {kk:"Жужан қағанаты"},
+        {kk:"Шығыс түркі қағанаты"},
+        {kk:"Мәңгі ел"}
+      ],
+      explain:{
+        kk:[
+          "Мәтіннің негізгі кейіпкері — Бумын қаған.",
+          "Басқа атаулар мәтінде кездескенімен, олар негізгі тақырып емес.",
+          "Сондықтан ең дәл тақырып — «Бумын қаған»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:21,
+      answer:"A",
+      question:{kk:"«Ел» сөзіне мағынасы жақын сөзді табыңыз."},
+      options:[
+        {kk:"жұрт"},
+        {kk:"ру"},
+        {kk:"тек"},
+        {kk:"тайпа"},
+        {kk:"жүз"}
+      ],
+      explain:{
+        kk:[
+          "«Ел» сөзі халық, жұрт мағынасында қолданылады.",
+          "Берілген нұсқалардың ішінде ең жақын мағына — «жұрт».",
+          "Сондықтан дұрыс жауап — «жұрт»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"text",
+    title:{kk:"Мәтін 2"},
+    text:{kk:`Ортақ бір нүктені айналатын шексіз жұлдыздардың алапат үлкен жүйесі ғарыш әлемі немесе галактика деп аталады. Аспанға жай көзбен көрінетін 6000 жұлдыз біздің галактика деп аталатын бір ғана бөлікке енеді. Ал галактикада шашырап төгілген сүтке ұқсас, ақшыл жолақ та кіреді. Бұл жолақты қазақтар «Құс жолы» деп атайды. Ғалымдар галактикалардың жасы 12-15 миллиардқа жуық жыл аралығын құрайды деп санайды. Орталыққа жақын орналасқан жұлдыздар кәрі, ал шеткері орналасқан жұлдыздар болып саналады.`}
+  },
+  {
+    type:"question",
+    q:{
+      id:22,
+      answer:"A",
+      question:{kk:"Мәтінге сай келетін тақырыпты таңдаңыз."},
+      options:[
+        {kk:"Галактика"},
+        {kk:"Астрономия"},
+        {kk:"Жұлдыздар"},
+        {kk:"Аспан әлемі"},
+        {kk:"Ғаламшарлар"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде галактиканың анықтамасы, оның құрамындағы жұлдыздар және Құс жолы туралы айтылған.",
+          "Негізгі ұғым — галактика.",
+          "Сондықтан дұрыс тақырып — «Галактика»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:23,
+      answer:"A",
+      question:{kk:"Берілген мәтіннің мақсатын анықтаңыз."},
+      options:[
+        {kk:"Аспан әлемі туралы ақпарат беру"},
+        {kk:"Жас жұлдыздарды санау"},
+        {kk:"Аспан әлемі туралы сипаттау"},
+        {kk:"Күнді зерттеу"},
+        {kk:"Аспан әлемін салыстыру"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде аспан әлеміне қатысты ғылыми ақпарат берілген.",
+          "Автор галактика, жұлдыз, Құс жолы туралы түсіндіреді.",
+          "Сондықтан мәтіннің мақсаты — аспан әлемі туралы ақпарат беру."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:24,
+      answer:"A",
+      question:{kk:"«Шексіз» сөзінің мәтіндегі мағынасын табыңыз."},
+      options:[
+        {kk:"санауға сан жетпейтін"},
+        {kk:"саны артық"},
+        {kk:"саны беймәлім"},
+        {kk:"саны толық емес"},
+        {kk:"саны кем"}
+      ],
+      explain:{
+        kk:[
+          "«Шексіз» сөзі өте көп, шегі жоқ деген мағына береді.",
+          "Мәтінде жұлдыздардың өте көп екені айтылған.",
+          "Сондықтан ең жақын мағына — «санауға сан жетпейтін»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"text",
+    title:{kk:"Мәтін 3"},
+    text:{kk:`2017 жылы Елорда «Болашақ қуаты» тақырыбында ЭКСПО-2017 көрмесі орын алды. EXPO-2017 көрмесіне 115 мемлекет және 22 халықаралық ұйым қатысты. Астана ЭКСПО – 2017 көрмесінің архитектуралық символы саналатын көрменің орталық элементі – «Нұр Әлем». Ол – сфераны бейнелейтін әлемдегі ең үлкен ғимарат. Ғимараттың 1-қабатында Қазақстан павильоны орналасқан. Мұнда келушілер елдің тарихымен, мәдениетімен, дәстүрімен, көрікті жерлерімен, сонымен қатар Қазақстанның соңғы жетістіктерімен таныса алады.`}
+  },
+  {
+    type:"question",
+    q:{
+      id:25,
+      answer:"A",
+      question:{kk:"Берілген мәтіннің мақсатын анықтаңыз."},
+      options:[
+        {kk:"ақпарат беру"},
+        {kk:"салыстыру"},
+        {kk:"пікір білдіру"},
+        {kk:"талдау"},
+        {kk:"дәлелдеу"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде EXPO-2017 туралы нақты деректер берілген.",
+          "Автор пікір таластырмайды, дәлелдемейді, тек ақпарат ұсынады.",
+          "Сондықтан мәтіннің мақсаты — ақпарат беру."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:26,
+      answer:"A",
+      question:{kk:"Берілген мәтінге сәйкес тақырыпты таңдаңыз."},
+      options:[
+        {kk:"«ЭКСПО-2017» көрмесі"},
+        {kk:"«ЭКСПО» көрмесі"},
+        {kk:"Болашақ қуаты"},
+        {kk:"Көрме"},
+        {kk:"Нұр әлем"}
+      ],
+      explain:{
+        kk:[
+          "Мәтін 2017 жылы өткен EXPO-2017 көрмесі туралы.",
+          "«Нұр Әлем» тек мәтіндегі бір элемент ретінде берілген.",
+          "Сондықтан ең нақты тақырып — «ЭКСПО-2017» көрмесі."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:27,
+      answer:"A",
+      question:{kk:"«Орын алды» сөзінің мағынасы жақын сөзді табыңыз."},
+      options:[
+        {kk:"өткізілді"},
+        {kk:"жеңіске жетті"},
+        {kk:"қойылды"},
+        {kk:"орындалды"},
+        {kk:"көрсетілді"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде «көрме орын алды» деген тіркес «көрме өтті, өткізілді» деген мағынада қолданылған.",
+          "Сондықтан мағынасы жақын сөз — «өткізілді»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"text",
+    title:{kk:"Мәтін 4"},
+    text:{kk:`Аялық білімді қарастыру мәселесі психология және лингвистика үшін ортақ болып табылады. Мұндай зерттеулердің лингвистикалық және психологиялық бағыты пайдаланған еңбектер, қолданылған әдістер және алынған нәтижелерді жариялау арқылы анықталады. Лингвистика аялық білімді үлгілеудің ең қолайлы бастапқы материалы болып табылады. Осыған байланысты аялық білім қазіргі кезде тек семантика терминдері ретінде кездеcе алады. Когнитивтік лингвистика білімге сүйенуді сөйлеу әрекетін ұйымдастырушы принцип, ал жалпы білімдерді өзара түсінушіліктің негізі ретінде қарастыруды көздейді. Психологтар мен психолингвистер семантиканы басқа тұрғыдан зерттейді. Бұл жағдайда зерттеу нысаны ретінде табиғи тілдегі мәтін немесе жасанды тілдегі мәтін емес, өз тілін пайдаланған адамдардың санасы ретінде табиғи тілдегі мәтін немесе жасанды тілдегі мәтін емес, өз тілін пайдаланатын адамдардың санасы алынады. Арнайы стимулдармен нұсқаулар арқылы зерттеуші гербалды немесе когнитивтік құрылымдар туралы талқылау жасауға мүмкіндік беретін зерттеуге түскен адамның немесе топтың қалыптасқан реакциясына қол жеткізеді.`}
+  },
+  {
+    type:"question",
+    q:{
+      id:28,
+      answer:"A",
+      question:{kk:"Мәтінге сәйкес ақпаратты табыңыз."},
+      options:[
+        {kk:"Когнитивтік лингвистика – білімді түсінушіліктің негізі"},
+        {kk:"Когнитивтік лингвистиканың қалыптасуы қарқын алуда"},
+        {kk:"Психолингвистика өз нысанына танымал мәселені қосып алады"},
+        {kk:"«Когнитивтік» ұғымы жеке түсінік қажет"},
+        {kk:"Когнитология ғылымы өз тілін пайдаланатын адамдардың санасы туралы зерттейді"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде когнитивтік лингвистика жалпы білімдерді өзара түсінушіліктің негізі ретінде қарастыратыны айтылған.",
+          "Сондықтан мәтінге сәйкес ақпарат — «Когнитивтік лингвистика – білімді түсінушіліктің негізі»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:29,
+      answer:"A",
+      question:{kk:"Мәтіндегі ойды әрі қарай жалғастырыңыз: Соңғы зерттеулерге сүйенсек, аялық білім дегеніміз _______."},
+      options:[
+        {kk:"семантиканың термині"},
+        {kk:"әлеуметтік лингвистика нысаны"},
+        {kk:"антропоцентристік парадигма бірлігі"},
+        {kk:"лексикалық деңгей"},
+        {kk:"когнитивтік лингвистиканың арнасы"}
+      ],
+      explain:{
+        kk:[
+          "Мәтінде аялық білім қазіргі кезде семантика терминдері ретінде кездесетіні айтылған.",
+          "Сондықтан дұрыс жалғасы — «семантиканың термині»."
+        ],
+        ru:[""]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:30,
+      answer:"A",
+      question:{kk:"«Қолайлы» сөзіне мағынасы жақын сөзді табыңыз."},
+      options:[
+        {kk:"тиімді"},
+        {kk:"жанды"},
+        {kk:"белгілі"},
+        {kk:"керекті"},
+        {kk:"үлгілі"}
+      ],
+      explain:{
+        kk:[
+          "«Қолайлы» сөзі ыңғайлы, тиімді деген мағына береді.",
+          "Берілген нұсқалардың ішінде ең жақыны — «тиімді».",
+          "Сондықтан дұрыс жауап — «тиімді»."
+        ],
+        ru:[""]
+      }
+    }
+  }
+];
+
+const analyticalRu = [
+  {
+    type:"question",
+    q:{
+      id:16,
+      answer:"E",
+      question:{ru:"Фридрих Энгельс писал: «Апелляция к морали и праву в научном отношении нисколько не подвигает нас вперёд; и в нравственном исследовании, как бы оно ни было справедливо, экономическая наука может усматривать не доказательство, а только […]». Вставьте слово, которое соответствует смыслу."},
+      options:[
+        {ru:"тезис"},
+        {ru:"заблуждение"},
+        {ru:"аргумент"},
+        {ru:"бессмыслицу"},
+        {ru:"симптом"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "В цитате противопоставляются доказательство и внешний признак явления.",
+          "Слово «симптом» означает признак, показатель чего-либо.",
+          "Поэтому по смыслу подходит вариант «симптом»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:17,
+      answer:"C",
+      question:{ru:"А.П. Чехов писал: «В человеке должно быть всё прекрасно: и лицо, и одежда, и душа, и […]». Вставьте вместо многоточия слово, которое использовал писатель."},
+      options:[
+        {ru:"ботинки"},
+        {ru:"мечты"},
+        {ru:"мысли"},
+        {ru:"воображение"},
+        {ru:"причёска"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Известная цитата А.П. Чехова звучит: «В человеке должно быть всё прекрасно: и лицо, и одежда, и душа, и мысли».",
+          "Поэтому правильное слово — «мысли»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:18,
+      answer:"D",
+      question:{ru:"Карл Маркс писал: «Если человек трудится только для себя, он может, пожалуй, стать знаменитым учёным, великим мудрецом, превосходным поэтом, но никогда не сможет стать истинно совершенным и великим […]». Вставьте слово по смыслу."},
+      options:[
+        {ru:"композитором"},
+        {ru:"компаньоном"},
+        {ru:"экономистом"},
+        {ru:"человеком"},
+        {ru:"философом"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Цитата говорит не о профессии, а о человеческой полноте и нравственном значении труда.",
+          "Слово «человеком» завершает мысль о том, что труд только для себя не делает человека великим.",
+          "Правильный ответ — «человеком»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:19,
+      answer:"C",
+      question:{ru:"В различных языках в политических документах и материалах порой отражены названия власти и принципы её формирования. Какой принцип формирования власти является наиболее предпочтительным в современных условиях политико-правового развития Казахстана?"},
+      options:[
+        {ru:"охлократия"},
+        {ru:"плутократия"},
+        {ru:"меритократия"},
+        {ru:"олигократия"},
+        {ru:"аристократия"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Меритократия — принцип продвижения людей по способностям, знаниям и заслугам.",
+          "В современных условиях именно этот принцип считается предпочтительным для эффективного государственного развития.",
+          "Правильный ответ — «меритократия»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:20,
+      answer:"E",
+      question:{ru:"«Государство ... является одним из фундаментальных институтов, составляющих инфраструктуру жизнедеятельности человека как общественного существа. В основе государства лежит стремление к достижению стабильности внутреннего и внешнего мира, пронизывающее всё человеческое бытие». Какой научный подход отражён в приведённой цитате?"},
+      options:[
+        {ru:"институционализм"},
+        {ru:"синергетика"},
+        {ru:"конституционализм"},
+        {ru:"структурализм"},
+        {ru:"социологизм"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "В цитате государство рассматривается как общественный институт и элемент социальной жизни человека.",
+          "Такой подход связан с социологическим объяснением явлений.",
+          "Правильный ответ — «социологизм»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:21,
+      answer:"C",
+      question:{ru:"Бухару-жырау принадлежат слова: «Не вверяй себя в бесконечные тяжбы за скот, за землю — скот может погибнуть, земля останется и после тебя. Довольствуйся посланным Богом, подумай о своём достоинстве». Какая аналогия к приведённым словам наиболее уместна?"},
+      options:[
+        {ru:"Знай и помни, что судиться порой бесполезно."},
+        {ru:"Знай и помни: Богу — Богово, кесарю — кесарево."},
+        {ru:"Знай и помни, что не хлебом единым живёт человек."},
+        {ru:"Знай и помни, что душа и плоть неотделимы."},
+        {ru:"Знай и помни, какое наследство ты оставишь потомкам."}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Смысл цитаты: материальные блага не должны быть главной целью жизни.",
+          "Выражение «не хлебом единым живёт человек» передаёт ту же мысль: человек живёт не только материальным.",
+          "Правильный ответ — этот вариант."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:22,
+      answer:"B",
+      question:{ru:"Государственная программа индустриально-инновационного развития Республики Казахстан (ГПИИР-2) теснейшим образом связана с общемировой тенденцией экономического развития. С чем связана современная глобальная тенденция в развитии экономики?"},
+      options:[
+        {ru:"третий глобальный экономический вызов"},
+        {ru:"третья индустриальная революция"},
+        {ru:"третья индустриальная программа"},
+        {ru:"третья научно-техническая революция"},
+        {ru:"третья промышленная волна"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Вопрос связывает индустриально-инновационное развитие с глобальной экономической тенденцией.",
+          "Такой контекст указывает на третью индустриальную революцию.",
+          "Правильный ответ — «третья индустриальная революция»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:23,
+      answer:"D",
+      question:{ru:"Среди важных этапов реализации программ и проектов, направленных на развитие духовной культуры в Казахстане, особенно выделяются те, которые имеют отношение к расширению наших знаний о духовном наследии казахского народа. Какая из программ сыграла важную роль в освоении новых граней духовного наследия казахского народа?"},
+      options:[
+        {ru:"программа перевода казахского языка на латиницу"},
+        {ru:"программа «Нұрлы жол»"},
+        {ru:"программа «Духовное наследие»"},
+        {ru:"программа «Народ в потоке истории»"},
+        {ru:"программа в книге Н. Назарбаева «В потоке истории»"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "В вопросе речь идёт об изучении истории и духовного наследия народа.",
+          "Программа «Народ в потоке истории» направлена именно на расширение исторического знания.",
+          "Поэтому правильный ответ — «Народ в потоке истории»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:24,
+      answer:"A",
+      question:{ru:"В учебниках и пособиях по философии часто приводятся популярные определения известных мыслителей. Кто среди философов до Маркса мог бы быть «присоединён» к известному его суждению о том, что «труд есть источник всякого богатства»?"},
+      options:[
+        {ru:"Гегель"},
+        {ru:"Шопенгауэр"},
+        {ru:"Кейнс"},
+        {ru:"Шеллинг"},
+        {ru:"Бергсон"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Вопрос связывает философскую традицию до Маркса с идеей труда как основы развития.",
+          "По отмеченному правильному ответу берётся вариант «Гегель».",
+          "Правильный ответ — «Гегель»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:25,
+      answer:"A",
+      question:{ru:"Современный технологический уклад — важнейшее звено любой конкурентоспособной экономики. Биотехнологии, информационные технологии, нано-технологии… Что общего между этими видами технологий?"},
+      options:[
+        {ru:"Это — важные элементы инновационной составляющей в современной промышленности."},
+        {ru:"Это — технологии, которые стимулируют рынок потребления."},
+        {ru:"Это — технологии, требующие особых затрат и ресурсов."},
+        {ru:"Это — важные цепочки инновационной производственной структуры."},
+        {ru:"Это — важные компоненты расходной части промышленного бюджета."}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Все перечисленные технологии относятся к современным инновационным направлениям.",
+          "Они являются элементами инновационной составляющей промышленности.",
+          "Поэтому правильный ответ — первый вариант."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:26,
+      answer:"C",
+      question:{ru:"Современная философия содержит ряд ключевых понятий, касающихся критического отношения к развитию научных теорий. Отметьте парные термины, характеризующие сущность подхода К. Поппера к вопросу о критике научных теорий."},
+      options:[
+        {ru:"критицизм и открытость"},
+        {ru:"верификация и фальсификация"},
+        {ru:"фальсификация и критицизм"},
+        {ru:"открытость и закрытость"},
+        {ru:"верификация и открытость"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "К. Поппер связывал научность теории с возможностью её фальсификации.",
+          "Также его подход основан на критическом отношении к научным теориям.",
+          "Поэтому правильная пара — «фальсификация и критицизм»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:27,
+      answer:"B",
+      question:{ru:"«Тигр напал на раздорожье / Чёрной ночью на меня. / Взор, страшнее гнева Божья, / Полон жёлтого огня...» Центральный эпизод какого произведения М.Ю. Лермонтова созвучен старинной грузинской песне о тигре и юноше?"},
+      options:[
+        {ru:"Герой нашего времени"},
+        {ru:"Мцыри"},
+        {ru:"Казачья колыбельная песня"},
+        {ru:"Песня про царя Ивана Васильевича..."},
+        {ru:"Демон"}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "В произведении «Мцыри» есть знаменитый эпизод борьбы героя с барсом.",
+          "Сюжетно и образно он близок к мотиву встречи юноши с хищником.",
+          "Правильный ответ — «Мцыри»."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:28,
+      answer:"C",
+      question:{ru:"И.В. Арнольд указывает, что термин «слово» обозначает базовую единицу языка, являющуюся результатом ассоциации значения с определённой группой звуков. Г.Б. Антрушина считает, что «слово» — единица речи, используемая для целей человеческого общения. Сравните эти суждения и определите, что наиболее общего между ними."},
+      options:[
+        {ru:"Общее то, что речь идёт о характеристиках «слова» как единице речи."},
+        {ru:"Акцент поставлен на полезности «слова» в человеческой коммуникации."},
+        {ru:"Акцент поставлен на том, что слово является одновременно семантической, грамматической и фонологической единицей."},
+        {ru:"Общее то, что прямо или косвенно речь идёт о «слове» как единице речи."},
+        {ru:"Акцент поставлен на том, что человеческая коммуникация невозможна без слов."}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Оба определения связывают слово со значением и звуковой формой.",
+          "Общий признак — слово рассматривается как единица, соединяющая смысл, грамматику и звук.",
+          "Поэтому правильный ответ — вариант C."
+        ]
+      }
+    }
+  },
+  {
+    type:"question",
+    q:{
+      id:29,
+      answer:"D",
+      question:{ru:"И.В. Арнольд и Г.Б. Антрушина по-разному определяют термин «слово». Сравните два суждения и определите, что кардинально их отличает."},
+      options:[
+        {ru:"Кардинальное отличие состоит в том, что у Арнольд речь идёт о сущности «языка», а у Антрушиной — о сущности «речи»."},
+        {ru:"Кардинальное отличие состоит в том, что у Арнольд речь идёт о богатстве слова, а у Антрушиной — о роли слова в человеческой коммуникации."},
+        {ru:"У Антрушиной акцент поставлен на том, что человеческая коммуникация невозможна без слов, а у Арнольд возможна."},
+        {ru:"У Антрушиной речь о слове идёт как об «единице речи, используемой для целей человеческого общения», а у Арнольд акцент делается на «единице языка»."},
+        {ru:"Антрушина пишет конкретно о слове как единице языка, а Арнольд упоминает в общем виде «слово как единицу языка»."}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "У Арнольд слово описывается как базовая единица языка.",
+          "У Антрушиной слово определяется как единица речи для общения.",
+          "Именно это различие отражено в варианте D."
+        ]
+      }
+    }
+  },
+  {
+    type:"text",
+    title:{ru:"Мәтін 5 / Текст"},
+    text:{ru:`Входит она по-прежнему прямо двойную скамью во всю длину, на которой можно сидеть лицом друг к другу, лицами — к двум противоположным сторонам улицы. По бортам крыши — лёгкие перильца, а к ним с внешней стороны прикреплены длинные рамки выполненных на жести вывесок и рекламных объявлений. Высота всего сооружения получалась довольно солидная, с теперешнего двухэтажные автобусы и троллейбусы. По длине вагоны примерно равнялись нашим трамвайным, но только, конечно, не современным четырёхосным, а двухосным, лёгким, в высоту же они намного превосходили их. Вот она прогромыхивает тяжко и неторопливо по рельсам: ну с какой скоростью может двигаться огромный железный вагон, влекомый двумя пусть даже и хорошо кормленными лошадьми? Для каждого из граждан 1970 года не представляло бы ни малейшего труда сесть на ходу с этого рыдвана где-нибудь на углу Пушкарской и Всевской, начать ход, доехать вагон у Народного дома и снова вскочить в него. Внутри конечный вагон был оборудован двумя длинными крашенными масляной краской скамьями вдоль окон, из конца в конец. Над обеими дверями висели фонарики, и по вечерам в них горели, тускло освещая внутренность конки, свечи. Билеты были разных сортов: за пятак — помчаться, за три копейки — на извозчику. Были еще и «пересадочные», на копейку дороже: взяв такой билет, вы могли доехать до пересечения двух линий и пересесть бесплатно в вагон другого маршрута. Вот на такой конке и ездил в те годы весь демократический, для которого уже «извозчик» был великой роскошью, Петербург: рабочие с далёких заводов, если нельзя было пройти пешком, студенты, когда был дождь или сильный холод, мелкие чиновники ежедневно, чиновники повыше рангом — от случая к случаю, горничные, модистки, хористки из мелких театриков, ночные бабочки, когда возвращались домой после нелёгкой своей работы. С раннего утра ползли они по улицам, огромные синие вагоны, зимой залепленные снегом, с наглухо замёрзшими стёклами, настылые, мрачные; летом пестреющие женскими шляпками, с империалом, то над чем-то хохочущим, то мирно созерцающим окрестный пейзаж... Шляпки, шляпки, чёрные котелки, мягкие панамы... и вдруг — дождь, и вся конка сразу покрылась множеством чёрных зонтов, точно на ней вниз наросло три или четыре десятка грибов.`}
+  },
+  {
+    type:"question",
+    q:{
+      id:30,
+      answer:"D",
+      question:{ru:"Какой из высказываний, приведённых ниже, содержит ответ на вопрос: «Как автор относится к старому транспортному средству — конке?»"},
+      options:[
+        {ru:"Автор не проводит параллели между историей конки и историей города."},
+        {ru:"Это неприятные воспоминания."},
+        {ru:"Автор рад наступлению эпохи технического прогресса и возможности передвигаться с помощью современного транспорта."},
+        {ru:"История конки, по мнению автора, неотъемлемая часть истории города."},
+        {ru:"Это несущественные воспоминания."}
+      ],
+      explain:{
+        kk:[""],
+        ru:[
+          "Автор подробно, образно и с вниманием описывает старую конку.",
+          "Описание показывает, что конка воспринимается как часть городской памяти и истории.",
+          "Поэтому правильный ответ — «История конки, по мнению автора, неотъемлемая часть истории города»."
+        ]
+      }
+    }
+  }
+];
+
+function renderAnalytical(){
+  const data = currentLang() === "kk" ? analyticalKz : analyticalRu;
+
+  document.getElementById("analyticalQuestions").innerHTML = data.map(item=>{
+    if(item.type === "text"){
+      return `
+        <div class="textBlock">
+          <h3>${t(item.title)}</h3>
+          <p>${t(item.text)}</p>
+        </div>
+      `;
+    }
+    return renderQuestion("analytical", item.q);
+  }).join("");
+}
+  const listeningData = [
+  {
+    key:"listen5",
+    title:"Text 5",
+    audio:"./TEXT 5 - АУДИО.mp3",
+    transcript:`Robin Knight, the television reporter, is interviewing the Duchess of Wessex for the programme “The English At Home”.
+
+Robin. — Now, Duchess… tell us about an ordinary day in your life.
+Duchess. — Well, I wake up at seven o’clock…
+Robin. — Really? Do you get up then?
+Duchess. — No, of course I don’t get up at that time. I have breakfast in bed and I read “The Times”.
+Robin. — What time do you get up?
+Duchess. — I get up at ten.
+Robin. — What do you do then?
+Duchess. — I read my letters and dictate the replies to my secretary.
+Robin. — … and then?
+Duchess. — At eleven I walk in the garden with Philip.
+Robin. — Oh? Who’s Philip?
+Duchess. — Philip’s my dog.
+Robin. — What time do you have lunch?
+Duchess. — I have lunch at twelve thirty.
+Robin. — And after lunch?
+Duchess. — Oh, I rest until six o’clock.
+Robin. — … and at six? What do you do at six?
+Duchess. — I dress for dinner. We have dinner at eight.
+Robin. — What time do you go to bed?
+Duchess. — Well, I have a bath at nine thirty, and I go to bed at ten.
+Robin. — Thank you, Duchess… you certainly have a busy and interesting life!`,
+    translation:{
+      kk:`Робин Найт, тележүргізуші, “The English At Home” бағдарламасы үшін Уэссекс герцогинясынан сұхбат алып жатыр.
+
+Робин. — Ал, герцогиня… өміріңіздегі қарапайым бір күн туралы айтып беріңізші.
+Герцогиня. — Мен сағат жетіде оянамын…
+Робин. — Рас па? Сол кезде тұрасыз ба?
+Герцогиня. — Жоқ, әрине, мен ол уақытта тұрмаймын. Мен төсекте таңғы ас ішемін және “The Times” газетін оқимын.
+Робин. — Сіз нешеде тұрасыз?
+Герцогиня. — Мен сағат онда тұрамын.
+Робин. — Содан кейін не істейсіз?
+Герцогиня. — Мен хаттарымды оқимын және хаттарға жауаптарды хатшыма айтып жаздырамын.
+Робин. — … содан кейін?
+Герцогиня. — Сағат он бірде мен Филиппен бақта серуендеймін.
+Робин. — О? Филип кім?
+Герцогиня. — Филип — менің итім.
+Робин. — Түскі асты нешеде ішесіз?
+Герцогиня. — Мен түскі асты он екі жарымда ішемін.
+Робин. — Ал түскі астан кейін?
+Герцогиня. — Мен сағат алтыға дейін демаламын.
+Робин. — … ал сағат алтыда? Сағат алтыда не істейсіз?
+Герцогиня. — Мен кешкі асқа киінемін. Біз кешкі асты сағат сегізде ішеміз.
+Робин. — Сіз нешеде ұйықтайсыз?
+Герцогиня. — Мен тоғыз жарымда ванна қабылдаймын және сағат онда ұйықтаймын.
+Робин. — Рақмет, герцогиня… сіздің өміріңіз шынымен қарбалас әрі қызықты екен!`,
+      ru:`Робин Найт, телевизионный репортёр, берёт интервью у герцогини Уэссекской для программы “The English At Home”.
+
+Робин. — Итак, герцогиня… расскажите нам об обычном дне в вашей жизни.
+Герцогиня. — Ну, я просыпаюсь в семь часов…
+Робин. — Правда? Вы тогда встаёте?
+Герцогиня. — Нет, конечно, я не встаю в это время. Я завтракаю в постели и читаю “The Times”.
+Робин. — Во сколько вы встаёте?
+Герцогиня. — Я встаю в десять.
+Робин. — Что вы потом делаете?
+Герцогиня. — Я читаю свои письма и диктую ответы своему секретарю.
+Робин. — … а потом?
+Герцогиня. — В одиннадцать я гуляю в саду с Филипом.
+Робин. — О? Кто такой Филип?
+Герцогиня. — Филип — моя собака.
+Робин. — Во сколько вы обедаете?
+Герцогиня. — Я обедаю в двенадцать тридцать.
+Робин. — А после обеда?
+Герцогиня. — О, я отдыхаю до шести часов.
+Робин. — … а в шесть? Что вы делаете в шесть?
+Герцогиня. — Я одеваюсь к ужину. Мы ужинаем в восемь.
+Робин. — Во сколько вы ложитесь спать?
+Герцогиня. — Ну, я принимаю ванну в девять тридцать и ложусь спать в десять.
+Робин. — Спасибо, герцогиня… у вас, безусловно, занятая и интересная жизнь!`
+    },
+    vocab:[
+      {en:"television reporter",kk:"тележүргізуші, телерепортёр",ru:"телевизионный репортёр"},
+      {en:"interview",kk:"сұхбат алу",ru:"интервьюировать"},
+      {en:"Duchess",kk:"герцогиня",ru:"герцогиня"},
+      {en:"ordinary day",kk:"қарапайым күн",ru:"обычный день"},
+      {en:"wake up",kk:"ояну",ru:"просыпаться"},
+      {en:"get up",kk:"тұру",ru:"вставать"},
+      {en:"breakfast in bed",kk:"төсекте таңғы ас ішу",ru:"завтракать в постели"},
+      {en:"dictate",kk:"айтып жаздыру",ru:"диктовать"},
+      {en:"secretary",kk:"хатшы",ru:"секретарь"},
+      {en:"busy",kk:"қарбалас",ru:"занятый"},
+      {en:"interesting",kk:"қызықты",ru:"интересный"}
+    ],
+    questions:[
+      {
+        id:1,
+        answer:"D",
+        question:{kk:"The name of the television reporter is _______.",ru:"The name of the television reporter is _______."},
+        options:[
+          {kk:"Roland White",ru:"Roland White"},
+          {kk:"Rodger Night",ru:"Rodger Night"},
+          {kk:"Ronald Kite",ru:"Ronald Kite"},
+          {kk:"Robin Knight",ru:"Robin Knight"}
+        ],
+        explain:{
+          kk:[
+            "Транскрипт басында: “Robin Knight, the television reporter...” деп нақты айтылған.",
+            "Демек тележүргізушінің аты — Robin Knight.",
+            "Дұрыс жауап — Robin Knight."
+          ],
+          ru:[
+            "В начале транскрипта прямо сказано: “Robin Knight, the television reporter...”.",
+            "Значит, имя телевизионного репортёра — Robin Knight.",
+            "Правильный ответ — Robin Knight."
+          ]
+        }
+      },
+      {
+        id:2,
+        answer:"D",
+        question:{kk:"The title of the interviewed person is _______.",ru:"The title of the interviewed person is _______."},
+        options:[
+          {kk:"Princess",ru:"Princess"},
+          {kk:"Queen",ru:"Queen"},
+          {kk:"Baroness",ru:"Baroness"},
+          {kk:"Duchess",ru:"Duchess"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Robin Knight Duchess of Wessex-пен сұхбаттасып жатқаны айтылған.",
+            "Duchess — сұхбат беріп отырған адамның титулы.",
+            "Дұрыс жауап — Duchess."
+          ],
+          ru:[
+            "В тексте сказано, что Robin Knight интервьюирует Duchess of Wessex.",
+            "Duchess — это титул интервьюируемого человека.",
+            "Правильный ответ — Duchess."
+          ]
+        }
+      },
+      {
+        id:3,
+        answer:"A",
+        question:{kk:"She reads _______ during her breakfast.",ru:"She reads _______ during her breakfast."},
+        options:[
+          {kk:"The Times",ru:"The Times"},
+          {kk:"The Republic",ru:"The Republic"},
+          {kk:"The Daily Telegram",ru:"The Daily Telegram"},
+          {kk:"The Sunday",ru:"The Sunday"}
+        ],
+        explain:{
+          kk:[
+            "Герцогиня: “I have breakfast in bed and I read The Times” дейді.",
+            "Яғни таңғы ас кезінде ол The Times оқиды.",
+            "Дұрыс жауап — The Times."
+          ],
+          ru:[
+            "Герцогиня говорит: “I have breakfast in bed and I read The Times”.",
+            "То есть во время завтрака она читает The Times.",
+            "Правильный ответ — The Times."
+          ]
+        }
+      },
+      {
+        id:4,
+        answer:"A",
+        question:{kk:"She gets up at _______.",ru:"She gets up at _______."},
+        options:[
+          {kk:"ten",ru:"ten"},
+          {kk:"eight",ru:"eight"},
+          {kk:"nine",ru:"nine"},
+          {kk:"seven",ru:"seven"}
+        ],
+        explain:{
+          kk:[
+            "Ол сағат жетіде оянатынын айтады, бірақ ол уақытта тұрмайды.",
+            "Кейін нақты: “I get up at ten” дейді.",
+            "Дұрыс жауап — ten."
+          ],
+          ru:[
+            "Она говорит, что просыпается в семь, но не встаёт в это время.",
+            "Потом она прямо говорит: “I get up at ten”.",
+            "Правильный ответ — ten."
+          ]
+        }
+      },
+      {
+        id:5,
+        answer:"C",
+        question:{kk:"She walks in the garden at _______.",ru:"She walks in the garden at _______."},
+        options:[
+          {kk:"ten",ru:"ten"},
+          {kk:"twelve",ru:"twelve"},
+          {kk:"eleven",ru:"eleven"},
+          {kk:"nine",ru:"nine"}
+        ],
+        explain:{
+          kk:[
+            "Герцогиня: “At eleven I walk in the garden with Philip” дейді.",
+            "Серуендеу уақыты — eleven.",
+            "Дұрыс жауап — eleven."
+          ],
+          ru:[
+            "Герцогиня говорит: “At eleven I walk in the garden with Philip”.",
+            "Время прогулки — eleven.",
+            "Правильный ответ — eleven."
+          ]
+        }
+      },
+      {
+        id:6,
+        answer:"A",
+        question:{kk:"Robin Knight casts the _______ programme.",ru:"Robin Knight casts the _______ programme."},
+        options:[
+          {kk:"television",ru:"television"},
+          {kk:"blog",ru:"blog"},
+          {kk:"radio",ru:"radio"},
+          {kk:"newspaper",ru:"newspaper"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Robin Knight television reporter деп берілген.",
+            "Ол “The English At Home” бағдарламасы үшін сұхбат алып жатыр.",
+            "Сондықтан бұл — television programme."
+          ],
+          ru:[
+            "В тексте Robin Knight назван television reporter.",
+            "Он берёт интервью для программы “The English At Home”.",
+            "Следовательно, это television programme."
+          ]
+        }
+      },
+      {
+        id:7,
+        answer:"D",
+        question:{kk:"The interviewer comments that the Duchess has an _______ life.",ru:"The interviewer comments that the Duchess has an _______ life."},
+        options:[
+          {kk:"difficult",ru:"difficult"},
+          {kk:"troubled",ru:"troubled"},
+          {kk:"hard",ru:"hard"},
+          {kk:"interesting",ru:"interesting"}
+        ],
+        explain:{
+          kk:[
+            "Соңында Robin: “you certainly have a busy and interesting life” дейді.",
+            "Нұсқалар ішінде осыған сәйкес сөз — interesting.",
+            "Дұрыс жауап — interesting."
+          ],
+          ru:[
+            "В конце Robin говорит: “you certainly have a busy and interesting life”.",
+            "Среди вариантов подходит слово interesting.",
+            "Правильный ответ — interesting."
+          ]
+        }
+      },
+      {
+        id:8,
+        answer:"C",
+        question:{kk:"Robin Knight was _______ when he heard that the Duchess wakes up at seven.",ru:"Robin Knight was _______ when he heard that the Duchess wakes up at seven."},
+        options:[
+          {kk:"motivated",ru:"motivated"},
+          {kk:"jealous",ru:"jealous"},
+          {kk:"surprised",ru:"surprised"},
+          {kk:"neutral",ru:"neutral"}
+        ],
+        explain:{
+          kk:[
+            "Герцогиня сағат жетіде оянамын дегенде Robin: “Really?” дейді.",
+            "“Really?” оның таңғалғанын көрсетеді.",
+            "Дұрыс жауап — surprised."
+          ],
+          ru:[
+            "Когда герцогиня сказала, что просыпается в семь, Robin ответил: “Really?”.",
+            "Слово “Really?” показывает удивление.",
+            "Правильный ответ — surprised."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    key:"listen6",
+    title:"Text 6",
+    audio:"./TEXT 6 - АУДИО.mp3",
+    transcript:`The thief, his mother, and $2 billion
+
+Stephane Breitwieser, 33, from Alsace, in France, is the greatest art thief in Europe. For six years, while he was working as a lorry driver, he stole 239 paintings from museums in France, Austria, and Denmark. He went into the museums just as they were closing and hid the paintings under his coat. Nobody looked at him because he was wearing a security guard's uniform. Back in his apartment, where he was living with his mother, he filled his bedroom with priceless works of art. His mother, Mireille, 53, thought all the paintings were copies. One day while they were having supper, the police arrived, and they took Stephane to the police station. Mireille was so angry with her son that she went to his room, took some paintings from the walls, and cut them into small pieces. Others she took and threw into the canal. Altogether she destroyed art worth two billion dollars! Both mother and son spent many years in prison.`,
+    translation:{
+      kk:`Ұры, оның анасы және 2 миллиард доллар
+
+Франциядағы Эльзастан шыққан 33 жастағы Стефан Брайтвизер — Еуропадағы ең үлкен өнер туындыларын ұрлаушы. Ол жүк көлігінің жүргізушісі болып жұмыс істеген алты жыл ішінде Франция, Австрия және Дания мұражайларынан 239 картинаны ұрлады. Ол мұражайларға олар жабылар кезде кіріп, картиналарды пальтосының астына жасыратын. Ешкім оған қарамайтын, өйткені ол күзетшінің формасын киіп жүретін. Анасы бірге тұрған пәтеріне оралған соң, ол жатын бөлмесін баға жетпес өнер туындыларына толтырды. Оның анасы, 53 жастағы Мирей, барлық картиналарды көшірме деп ойлады. Бір күні олар кешкі ас ішіп отырғанда, полиция келіп, Стефанды полиция бөліміне алып кетті. Мирей ұлына қатты ашуланғандықтан, оның бөлмесіне барып, қабырғалардан бірнеше картинаны алып, оларды ұсақ бөліктерге кесіп тастады. Басқаларын алып, каналға лақтырып жіберді. Барлығы ол екі миллиард доллар тұратын өнер туындыларын жойды! Анасы да, ұлы да көп жыл түрмеде отырды.`,
+      ru:`Вор, его мать и 2 миллиарда долларов
+
+Стефан Брайтвизер, 33 года, из Эльзаса во Франции, — величайший похититель произведений искусства в Европе. В течение шести лет, пока он работал водителем грузовика, он украл 239 картин из музеев Франции, Австрии и Дании. Он заходил в музеи как раз тогда, когда они закрывались, и прятал картины под пальто. Никто не обращал на него внимания, потому что он был одет в форму охранника. Вернувшись в свою квартиру, где он жил с матерью, он заполнил свою спальню бесценными произведениями искусства. Его мать, Мирей, 53 года, думала, что все картины были копиями. Однажды, когда они ужинали, приехала полиция и забрала Стефана в полицейский участок. Мирей так разозлилась на сына, что пошла в его комнату, сняла со стен несколько картин и разрезала их на маленькие кусочки. Другие она взяла и бросила в канал. Всего она уничтожила произведения искусства стоимостью два миллиарда долларов! И мать, и сын провели много лет в тюрьме.`
+    },
+    vocab:[
+      {en:"thief",kk:"ұры",ru:"вор"},
+      {en:"art thief",kk:"өнер туындыларын ұрлаушы",ru:"похититель произведений искусства"},
+      {en:"lorry driver",kk:"жүк көлігінің жүргізушісі",ru:"водитель грузовика"},
+      {en:"museum",kk:"мұражай",ru:"музей"},
+      {en:"hide",kk:"жасыру",ru:"прятать"},
+      {en:"coat",kk:"пальто",ru:"пальто"},
+      {en:"security guard",kk:"күзетші",ru:"охранник"},
+      {en:"uniform",kk:"форма",ru:"форма"},
+      {en:"priceless",kk:"баға жетпес",ru:"бесценный"},
+      {en:"copy",kk:"көшірме",ru:"копия"},
+      {en:"canal",kk:"канал",ru:"канал"},
+      {en:"prison",kk:"түрме",ru:"тюрьма"}
+    ],
+    questions:[
+      {
+        id:9,
+        answer:"D",
+        question:{kk:"Mireille cut some paintings into pieces, others she _______.",ru:"Mireille cut some paintings into pieces, others she _______."},
+        options:[
+          {kk:"sent to the local companies",ru:"sent to the local companies"},
+          {kk:"sold people from other countries",ru:"sold people from other countries"},
+          {kk:"gave to the police officers",ru:"gave to the police officers"},
+          {kk:"took and threw into the canal",ru:"took and threw into the canal"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде: “Others she took and threw into the canal” деп айтылған.",
+            "Яғни қалғандарын ол алып, каналға лақтырған.",
+            "Дұрыс жауап — took and threw into the canal."
+          ],
+          ru:[
+            "В тексте сказано: “Others she took and threw into the canal”.",
+            "То есть другие картины она взяла и бросила в канал.",
+            "Правильный ответ — took and threw into the canal."
+          ]
+        }
+      },
+      {
+        id:10,
+        answer:"A",
+        question:{kk:"Mireille went to Stephane’s room to _______.",ru:"Mireille went to Stephane’s room to _______."},
+        options:[
+          {kk:"destroy some paintings",ru:"destroy some paintings"},
+          {kk:"hide other paintings from the police",ru:"hide other paintings from the police"},
+          {kk:"jump into canal and escape",ru:"jump into canal and escape"},
+          {kk:"take money and run away",ru:"take money and run away"}
+        ],
+        explain:{
+          kk:[
+            "Мирей ұлына ашуланып, оның бөлмесіне барған.",
+            "Ол картиналарды кесіп, кейбірін каналға лақтырған.",
+            "Сондықтан оның мақсаты — destroy some paintings."
+          ],
+          ru:[
+            "Мирей разозлилась на сына и пошла в его комнату.",
+            "Она разрезала картины и часть бросила в канал.",
+            "Значит, цель была destroy some paintings."
+          ]
+        }
+      },
+      {
+        id:11,
+        answer:"A",
+        question:{kk:"Stephane Breitweiser was working as a lorry driver for _______.",ru:"Stephane Breitweiser was working as a lorry driver for _______."},
+        options:[
+          {kk:"six years",ru:"six years"},
+          {kk:"six weeks",ru:"six weeks"},
+          {kk:"seven years",ru:"seven years"},
+          {kk:"six months",ru:"six months"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде: “For six years, while he was working as a lorry driver...” деп берілген.",
+            "Демек ол жүк көлігі жүргізушісі болып алты жыл жұмыс істеген.",
+            "Дұрыс жауап — six years."
+          ],
+          ru:[
+            "В тексте сказано: “For six years, while he was working as a lorry driver...”.",
+            "Значит, он работал водителем грузовика шесть лет.",
+            "Правильный ответ — six years."
+          ]
+        }
+      },
+      {
+        id:12,
+        answer:"C",
+        question:{kk:"When Stephane went to the museums _______.",ru:"When Stephane went to the museums _______."},
+        options:[
+          {kk:"new paintings arrived",ru:"new paintings arrived"},
+          {kk:"they were closed",ru:"they were closed"},
+          {kk:"they just were closing",ru:"they just were closing"},
+          {kk:"there were many people",ru:"there were many people"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде ол мұражайларға олар жабылар кезде кіргені айтылған.",
+            "Ағылшынша: “just as they were closing”.",
+            "Дұрыс жауап — they just were closing."
+          ],
+          ru:[
+            "В тексте сказано, что он заходил в музеи как раз в момент закрытия.",
+            "По-английски: “just as they were closing”.",
+            "Правильный ответ — they just were closing."
+          ]
+        }
+      },
+      {
+        id:13,
+        answer:"C",
+        question:{kk:"Stephane Breitweiser filled his _______ with priceless works of art.",ru:"Stephane Breitweiser filled his _______ with priceless works of art."},
+        options:[
+          {kk:"study",ru:"study"},
+          {kk:"living room",ru:"living room"},
+          {kk:"bedroom",ru:"bedroom"},
+          {kk:"bathroom",ru:"bathroom"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде: “he filled his bedroom with priceless works of art” деп айтылған.",
+            "Яғни ол жатын бөлмесін өнер туындыларына толтырған.",
+            "Дұрыс жауап — bedroom."
+          ],
+          ru:[
+            "В тексте сказано: “he filled his bedroom with priceless works of art”.",
+            "То есть он заполнил спальню произведениями искусства.",
+            "Правильный ответ — bedroom."
+          ]
+        }
+      },
+      {
+        id:14,
+        answer:"A",
+        question:{kk:"No one paid special attention to Stephane at the museum because he was _______.",ru:"No one paid special attention to Stephane at the museum because he was _______."},
+        options:[
+          {kk:"wearing a security guard’s uniform",ru:"wearing a security guard’s uniform"},
+          {kk:"one of the painters of the museum",ru:"one of the painters of the museum"},
+          {kk:"wearing a police officer’s uniform",ru:"wearing a police officer’s uniform"},
+          {kk:"known by everybody at the museum",ru:"known by everybody at the museum"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде: “Nobody looked at him because he was wearing a security guard's uniform” делінген.",
+            "Ешкім назар аудармаған себебі — ол күзетші формасын киген.",
+            "Дұрыс жауап — wearing a security guard’s uniform."
+          ],
+          ru:[
+            "В тексте сказано: “Nobody looked at him because he was wearing a security guard's uniform”.",
+            "На него не обращали внимания, потому что он был в форме охранника.",
+            "Правильный ответ — wearing a security guard’s uniform."
+          ]
+        }
+      },
+      {
+        id:15,
+        answer:"B",
+        question:{kk:"Stephane Breitweiser was from _______.",ru:"Stephane Breitweiser was from _______."},
+        options:[
+          {kk:"Berlin, Germany",ru:"Berlin, Germany"},
+          {kk:"Alsace, France",ru:"Alsace, France"},
+          {kk:"Vienna, Austria",ru:"Vienna, Austria"},
+          {kk:"Copenhagen, Denmark",ru:"Copenhagen, Denmark"}
+        ],
+        explain:{
+          kk:[
+            "Мәтіннің басында: “from Alsace, in France” деп берілген.",
+            "Демек Stephane Франциядағы Alsace аймағынан.",
+            "Дұрыс жауап — Alsace, France."
+          ],
+          ru:[
+            "В начале текста сказано: “from Alsace, in France”.",
+            "Значит, Stephane был из Эльзаса, Франция.",
+            "Правильный ответ — Alsace, France."
+          ]
+        }
+      },
+      {
+        id:16,
+        answer:"A",
+        question:{kk:"Mireille is _______ years old.",ru:"Mireille is _______ years old."},
+        options:[
+          {kk:"53",ru:"53"},
+          {kk:"34",ru:"34"},
+          {kk:"37",ru:"37"},
+          {kk:"45",ru:"45"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде: “His mother, Mireille, 53...” деп нақты жазылған.",
+            "Демек Мирей 53 жаста.",
+            "Дұрыс жауап — 53."
+          ],
+          ru:[
+            "В тексте прямо сказано: “His mother, Mireille, 53...”.",
+            "Значит, Mireille 53 года.",
+            "Правильный ответ — 53."
+          ]
+        }
+      }
+    ]
+  }
+];
+
+function renderTabs(section){
+  const base = section.key;
+
+  return `
+    <div class="tabs">
+      <button class="tab active" type="button" onclick="openTab('${base}','test')">Test</button>
+      <button class="tab" type="button" onclick="openTab('${base}','transcript')">Transcript</button>
+      <button class="tab" type="button" onclick="openTab('${base}','translation')">
+        <span class="kk">Аударма</span>
+        <span class="ru">Перевод</span>
+      </button>
+      <button class="tab" type="button" onclick="openTab('${base}','vocab')">Vocabulary</button>
+    </div>
+
+    <div class="tabContent active" data-tabs="${base}" data-panel="test">
+      ${section.questions.map(q=>renderQuestion("englishListening",q)).join("")}
+    </div>
+
+    <div class="tabContent" data-tabs="${base}" data-panel="transcript">
+      <p>${section.transcript.replace(/\n/g,"<br>")}</p>
+    </div>
+
+    <div class="tabContent" data-tabs="${base}" data-panel="translation">
+      <p>${t(section.translation).replace(/\n/g,"<br>")}</p>
+    </div>
+
+    <div class="tabContent" data-tabs="${base}" data-panel="vocab">
+      <div class="vocabGrid">
+        ${section.vocab.map(v=>`
+          <div class="vocabItem">
+            <b>${v.en}</b><br>
+            <span class="kk">${v.kk}</span>
+            <span class="ru">${v.ru}</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function openTab(base,panel){
+  document.querySelectorAll(`[data-tabs="${base}"]`).forEach(el=>{
+    el.classList.toggle("active",el.dataset.panel===panel);
+  });
+
+  const buttons = document.querySelectorAll(`[onclick^="openTab('${base}'"]`);
+  buttons.forEach(btn=>btn.classList.remove("active"));
+
+  const activeBtn = Array.from(buttons).find(btn=>btn.getAttribute("onclick").includes(`'${panel}'`));
+  if(activeBtn) activeBtn.classList.add("active");
+}
+
+function renderListening(){
+  return `
+    <div class="card" data-test="englishListening">
+      <h3>Listening</h3>
+
+      ${listeningData.map(section=>`
+        <div class="audioBox">
+          <h3>${section.title}</h3>
+          <audio controls src="${section.audio}"></audio>
+          ${renderTabs(section)}
+        </div>
+      `).join("")}
+
+      <div class="actions">
+        <button class="btn" type="button" onclick="checkTest('englishListening')">
+          <span class="kk">Listening нәтижесін көрсету</span>
+          <span class="ru">Показать результат Listening</span>
+        </button>
+
+        <button class="btn secondary" type="button" onclick="resetTest('englishListening')">
+          <span class="kk">Қайта өту</span>
+          <span class="ru">Пройти заново</span>
+        </button>
+      </div>
+
+      <div class="result" id="englishListeningResult"></div>
+    </div>
+  `;
+}
+  const readingData = [
+  {
+    key:"read5",
+    title:"Text 5",
+    text:`Halloween, also referred to as All Hallows' Eve, is a holiday that's celebrated in America on 31 October of each year, regardless of what day of the week this date falls on. Although it is rooted in religion, Halloween today is enjoyed mainly because of its decorations, costumes, candy, treats, and general excitement, and furthermore, it is enjoyed by most everyone.
+
+Before Halloween, many individuals carve a design into an orange-colored pumpkin, or a solid, durable vegetable. Once a personally satisfying design is carved, a lit candle is typically put inside a pumpkin, thereby making it a Jack-O-Lantern. At night, this design lights up against the darkness.
+
+Besides carving pumpkins, some celebrate Halloween by putting decorations up. Supernatural figures, including vampires, ghosts, werewolves, zombies, and more, generally account for most of these decorations. Bugs, spiders, cobwebs, gravestones, and anything else that can be considered creepy can also be found on Halloween, in decoration form.
+
+Only some adults celebrate Halloween, and they generally do so by attending parties. Inversely, the vast majority of children dress in costume and walk from door to door in search of candy — a practice known as trick-or-treating. After knocking on a door, one says “Trick or Treat” and a piece of candy is given to him or her.`,
+    translation:{
+      kk:`Halloween, яғни All Hallows' Eve деп те аталатын мереке, Америкада жыл сайын 31 қазанда атап өтіледі. Бұл күн аптаның қай күніне түссе де, мереке сол күні болады. Оның түбі дінмен байланысты болғанымен, қазіргі кезде Halloween көбіне безендіру, костюм, тәттілер және ерекше көңіл-күй арқылы қызықты мереке ретінде қабылданады.
+
+Halloween алдында көптеген адамдар қызғылт сары асқабаққа әртүрлі бейне ойып жасайды. Ойылған асқабақтың ішіне жанып тұрған шам қойылады. Осылайша Jack-O-Lantern жасалады. Түнде бұл бейне қараңғыда жарқырап көрінеді.
+
+Асқабақ оюдан бөлек, кейбір адамдар үйлерін әртүрлі қорқынышты әшекейлермен безендіреді. Вампирлер, елестер, қасқыр-адамдар, зомбилер және басқа да табиғаттан тыс кейіпкерлер жиі қолданылады. Сонымен қатар жәндіктер, өрмекшілер, өрмек торлары, қабір тастары және қорқынышты көрінетін заттар да Halloween безендіруінде кездеседі.
+
+Ересектердің кейбірі Halloween-ді кештерге қатысу арқылы атап өтеді. Ал балалардың көпшілігі костюм киіп, үйлерді аралап, тәтті сұрайды. Бұл дәстүр trick-or-treating деп аталады. Олар есікті қағып, “Trick or Treat” дейді, содан кейін оларға тәтті беріледі.`,
+      ru:`Halloween, также называемый All Hallows' Eve, — это праздник, который отмечается в Америке каждый год 31 октября. Он празднуется именно в эту дату независимо от того, на какой день недели она выпадает. Хотя корни праздника связаны с религией, сегодня Halloween больше воспринимается как праздник украшений, костюмов, сладостей и общего веселья.
+
+Перед Halloween многие люди вырезают рисунок на оранжевой тыкве. После того как рисунок вырезан, внутрь тыквы обычно ставят зажжённую свечу. Так получается Jack-O-Lantern. Ночью этот рисунок светится в темноте.
+
+Кроме вырезания тыкв, некоторые люди украшают дома. Сверхъестественные персонажи — вампиры, привидения, оборотни, зомби и другие — чаще всего встречаются среди таких украшений. Также на Halloween можно увидеть насекомых, пауков, паутину, надгробия и всё, что считается жутким или необычным.
+
+Только некоторые взрослые празднуют Halloween, обычно посещая вечеринки. А большинство детей надевают костюмы и ходят от двери к двери в поисках конфет. Эта традиция называется trick-or-treating. После стука в дверь ребёнок говорит “Trick or Treat”, и ему дают конфету.`
+    },
+    questions:[
+      {
+        id:35,
+        answer:"C",
+        question:{kk:"When does Halloween take place?",ru:"When does Halloween take place?"},
+        options:[
+          {kk:"14 February",ru:"14 February"},
+          {kk:"25 December",ru:"25 December"},
+          {kk:"31 October",ru:"31 October"},
+          {kk:"Eight weeks before Christmas",ru:"Eight weeks before Christmas"}
+        ],
+        explain:{
+          kk:[
+            "Мәтіннің бірінші сөйлемінде Halloween 31 October күні атап өтілетіні жазылған.",
+            "Сондықтан дұрыс жауап — 31 October."
+          ],
+          ru:[
+            "В первом предложении текста сказано, что Halloween отмечается 31 October.",
+            "Поэтому правильный ответ — 31 October."
+          ]
+        }
+      },
+      {
+        id:36,
+        answer:"D",
+        question:{kk:"What day of the week does Halloween fall on?",ru:"What day of the week does Halloween fall on?"},
+        options:[
+          {kk:"Halloween is always on Saturday",ru:"Halloween is always on Saturday"},
+          {kk:"Halloween is always on Friday",ru:"Halloween is always on Friday"},
+          {kk:"Halloween is always on Monday",ru:"Halloween is always on Monday"},
+          {kk:"Halloween’s day of the week varies by year",ru:"Halloween’s day of the week varies by year"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Halloween 31 қазанда болатыны, аптаның қай күніне түскені маңызды емес екені айтылған.",
+            "Демек аптаның күні жыл сайын өзгеруі мүмкін.",
+            "Дұрыс жауап — Halloween’s day of the week varies by year."
+          ],
+          ru:[
+            "В тексте сказано, что Halloween отмечается 31 октября независимо от дня недели.",
+            "Значит, день недели каждый год может быть разным.",
+            "Правильный ответ — Halloween’s day of the week varies by year."
+          ]
+        }
+      },
+      {
+        id:37,
+        answer:"A",
+        question:{kk:"How do most children celebrate Halloween?",ru:"How do most children celebrate Halloween?"},
+        options:[
+          {kk:"By dressing in costume and trick-or-treating",ru:"By dressing in costume and trick-or-treating"},
+          {kk:"By studying schoolwork",ru:"By studying schoolwork"},
+          {kk:"By hanging ornaments on a Christmas tree",ru:"By hanging ornaments on a Christmas tree"},
+          {kk:"By producing candies",ru:"By producing candies"}
+        ],
+        explain:{
+          kk:[
+            "Соңғы абзацта балалардың көпшілігі костюм киіп, үй-үйді аралап тәтті сұрайтыны айтылған.",
+            "Бұл дәстүр trick-or-treating деп аталады.",
+            "Дұрыс жауап — By dressing in costume and trick-or-treating."
+          ],
+          ru:[
+            "В последнем абзаце сказано, что большинство детей надевают костюмы и ходят по домам за конфетами.",
+            "Эта традиция называется trick-or-treating.",
+            "Правильный ответ — By dressing in costume and trick-or-treating."
+          ]
+        }
+      },
+      {
+        id:38,
+        answer:"C",
+        question:{kk:"Halloween is a holiday that's celebrated in America on _______ of each year.",ru:"Halloween is a holiday that's celebrated in America on _______ of each year."},
+        options:[
+          {kk:"31 September",ru:"31 September"},
+          {kk:"11 October",ru:"11 October"},
+          {kk:"31 October",ru:"31 October"},
+          {kk:"21 September",ru:"21 September"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде бұл мереке жыл сайын 31 October күні атап өтіледі деп нақты жазылған.",
+            "Сондықтан дұрыс жауап — 31 October."
+          ],
+          ru:[
+            "В тексте прямо сказано, что праздник отмечается 31 October каждый год.",
+            "Правильный ответ — 31 October."
+          ]
+        }
+      },
+      {
+        id:39,
+        answer:"D",
+        question:{kk:"Before Halloween, many individuals carve a design into an orange-coloured _______.",ru:"Before Halloween, many individuals carve a design into an orange-coloured _______."},
+        options:[
+          {kk:"apple",ru:"apple"},
+          {kk:"cabbage",ru:"cabbage"},
+          {kk:"tomato",ru:"tomato"},
+          {kk:"pumpkin",ru:"pumpkin"}
+        ],
+        explain:{
+          kk:[
+            "Екінші абзацта адамдар orange-colored pumpkin ішіне бейне ойып жасайтыны айтылған.",
+            "Pumpkin — асқабақ.",
+            "Дұрыс жауап — pumpkin."
+          ],
+          ru:[
+            "Во втором абзаце сказано, что люди вырезают рисунок на orange-colored pumpkin.",
+            "Pumpkin — это тыква.",
+            "Правильный ответ — pumpkin."
+          ]
+        }
+      },
+      {
+        id:40,
+        answer:"B",
+        question:{kk:"One can expect to see all of the following types of decorations on Halloween except:",ru:"One can expect to see all of the following types of decorations on Halloween except:"},
+        options:[
+          {kk:"Spiders and other bugs",ru:"Spiders and other bugs"},
+          {kk:"Snowflakes and ribbons",ru:"Snowflakes and ribbons"},
+          {kk:"Gravestones and zombies",ru:"Gravestones and zombies"},
+          {kk:"Vampires",ru:"Vampires"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде spiders, bugs, gravestones, zombies, vampires сияқты Halloween әшекейлері аталған.",
+            "Snowflakes and ribbons мәтінде айтылмаған және Halloween тақырыбына сәйкес емес.",
+            "Дұрыс жауап — Snowflakes and ribbons."
+          ],
+          ru:[
+            "В тексте названы spiders, bugs, gravestones, zombies, vampires как украшения Halloween.",
+            "Snowflakes and ribbons в тексте не упоминаются и не относятся к Halloween.",
+            "Правильный ответ — Snowflakes and ribbons."
+          ]
+        }
+      },
+      {
+        id:41,
+        answer:"C",
+        question:{kk:"Some adults celebrate Halloween in which of the following ways?",ru:"Some adults celebrate Halloween in which of the following ways?"},
+        options:[
+          {kk:"Trick-or-treating",ru:"Trick-or-treating"},
+          {kk:"Going to bed early",ru:"Going to bed early"},
+          {kk:"Attending Halloween parties",ru:"Attending Halloween parties"},
+          {kk:"Buying Christmas gifts",ru:"Buying Christmas gifts"}
+        ],
+        explain:{
+          kk:[
+            "Соңғы абзацта кейбір ересектер Halloween-ді parties-ке қатысу арқылы атап өтетіні айтылған.",
+            "Дұрыс жауап — Attending Halloween parties."
+          ],
+          ru:[
+            "В последнем абзаце сказано, что некоторые взрослые празднуют Halloween, посещая parties.",
+            "Правильный ответ — Attending Halloween parties."
+          ]
+        }
+      },
+      {
+        id:42,
+        answer:"C",
+        question:{kk:"Before Halloween, many individuals carve a design into an _______-colored pumpkin.",ru:"Before Halloween, many individuals carve a design into an _______-colored pumpkin."},
+        options:[
+          {kk:"red",ru:"red"},
+          {kk:"black",ru:"black"},
+          {kk:"orange",ru:"orange"},
+          {kk:"blue",ru:"blue"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде orange-colored pumpkin деп берілген.",
+            "Orange — қызғылт сары түс.",
+            "Дұрыс жауап — orange."
+          ],
+          ru:[
+            "В тексте указано: orange-colored pumpkin.",
+            "Orange — оранжевый цвет.",
+            "Правильный ответ — orange."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    key:"read6",
+    title:"Text 6",
+    text:`Thanksgiving is a holiday celebrated predominantly in North America, and it possesses a different meaning in each of the countries where it's acknowledged.
+
+In the United States, Thanksgiving is a federal holiday, meaning all government employees and most private employees are given a day off of work, and always takes place on the Fourth Thursday in November, regardless of the date.
+
+The holiday signifies the immense progress made by pilgrims, or some of the first travellers to North America, at Plymouth Plantation circa 1621. It was at this time that the hungry and weary Pilgrims were taught by Native Americans how to grow and produce food on North America's unique terrain. Once they'd grown and caught an abundance of food, the Pilgrims were expectedly thankful, and they celebrated alongside the Native Americans who provided them with such valuable assistance. President Abraham Lincoln initiated the contemporary practice of Thanksgiving by calling for a “day of Thanksgiving” during one of his Civil War addresses.
+
+In America today, Thanksgiving remains firmly engrained in its historical roots, and is widely considered to be a day for giving thanks for good food, good times, and family. Thanksgiving dinner generally consists of turkey, mashed potatoes, stuffing, vegetables, gravy, and ample desserts. To be sure, indulging in abundance is a cornerstone of the holiday, as doing so could only be possible if one possesses abundance.`,
+    translation:{
+      kk:`Thanksgiving — негізінен Солтүстік Америкада атап өтілетін мереке. Бұл мерекенің әр елде өзіндік мағынасы бар.
+
+Америка Құрама Штаттарында Thanksgiving федералдық мереке болып саналады. Бұл барлық мемлекеттік қызметкерлерге және көптеген жеке сектор қызметкерлеріне демалыс күні берілетінін білдіреді. Мереке әрқашан қараша айының төртінші бейсенбісінде өтеді.
+
+Бұл мереке Солтүстік Америкаға алғаш келген саяхатшылардың, яғни пилигримдердің, шамамен 1621 жылы Plymouth Plantation жерінде жеткен үлкен жетістігін білдіреді. Сол уақытта аш әрі шаршаған пилигримдерге жергілікті америкалықтар Солтүстік Американың ерекше жерінде азық-түлік өсіруді және өндіруді үйреткен. Кейін олар мол азық жинаған соң, пилигримдер алғыс айтып, оларға көмектескен жергілікті америкалықтармен бірге тойлаған. Президент Авраам Линкольн Азаматтық соғыс кезіндегі сөздерінің бірінде “day of Thanksgiving” жариялап, қазіргі Thanksgiving дәстүрін бастады.
+
+Қазіргі Америкада Thanksgiving тарихи тамырымен тығыз байланысты және жақсы ас, жақсы уақыт, отбасы үшін алғыс айту күні ретінде саналады. Thanksgiving дастарқаны әдетте күркетауықтан, картоп езбесінен, stuffing, көкөністерден, gravy және түрлі тәттілерден тұрады.`,
+      ru:`Thanksgiving — праздник, который преимущественно отмечается в Северной Америке. В каждой стране, где он признаётся, он имеет своё значение.
+
+В Соединённых Штатах Thanksgiving является федеральным праздником. Это означает, что все государственные служащие и большинство работников частного сектора получают выходной день. Праздник всегда проходит в четвёртый четверг ноября, независимо от даты.
+
+Праздник символизирует большой прогресс, которого достигли пилигримы — одни из первых путешественников в Северную Америку — в Plymouth Plantation примерно в 1621 году. В то время голодных и уставших пилигримов коренные американцы научили выращивать и производить еду на необычной земле Северной Америки. Когда пилигримы вырастили и добыли много еды, они были благодарны и праздновали вместе с коренными американцами, которые оказали им ценную помощь. Президент Авраам Линкольн положил начало современной практике Thanksgiving, призвав к “day of Thanksgiving” в одном из своих обращений во время Гражданской войны.
+
+Сегодня в Америке Thanksgiving прочно связан со своими историческими корнями и считается днём благодарности за хорошую еду, хорошее время и семью. Ужин на Thanksgiving обычно состоит из индейки, картофельного пюре, начинки, овощей, соуса и множества десертов.`
+    },
+    questions:[
+      {
+        id:43,
+        answer:"D",
+        question:{kk:"When is Thanksgiving celebrated in the US?",ru:"When is Thanksgiving celebrated in the US?"},
+        options:[
+          {kk:"November 25",ru:"November 25"},
+          {kk:"Four weeks before Christmas",ru:"Four weeks before Christmas"},
+          {kk:"Throughout November",ru:"Throughout November"},
+          {kk:"The Fourth Thursday in November",ru:"The Fourth Thursday in November"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Thanksgiving АҚШ-та қараша айының төртінші бейсенбісінде өтетіні айтылған.",
+            "Дұрыс жауап — The Fourth Thursday in November."
+          ],
+          ru:[
+            "В тексте сказано, что Thanksgiving в США проходит в четвёртый четверг ноября.",
+            "Правильный ответ — The Fourth Thursday in November."
+          ]
+        }
+      },
+      {
+        id:44,
+        answer:"B",
+        question:{kk:"Thanksgiving is a holiday celebrated predominantly in _______ America.",ru:"Thanksgiving is a holiday celebrated predominantly in _______ America."},
+        options:[
+          {kk:"West",ru:"West"},
+          {kk:"North",ru:"North"},
+          {kk:"East",ru:"East"},
+          {kk:"South",ru:"South"}
+        ],
+        explain:{
+          kk:[
+            "Бірінші сөйлемде Thanksgiving predominantly in North America celebrated деп берілген.",
+            "Дұрыс жауап — North."
+          ],
+          ru:[
+            "В первом предложении сказано: Thanksgiving is celebrated predominantly in North America.",
+            "Правильный ответ — North."
+          ]
+        }
+      },
+      {
+        id:45,
+        answer:"D",
+        question:{kk:"Which event(s) began the tradition of Thanksgiving?",ru:"Which event(s) began the tradition of Thanksgiving?"},
+        options:[
+          {kk:"The pilgrims' food-creation success and large-scale celebratory dinner",ru:"The pilgrims' food-creation success and large-scale celebratory dinner"},
+          {kk:"Nobody is certain",ru:"Nobody is certain"},
+          {kk:"An address delivered by President Lincoln",ru:"An address delivered by President Lincoln"},
+          {kk:"A and C",ru:"A and C"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде екі нәрсе айтылады: пилигримдердің мол азық жинап тойлауы және Lincoln-нің Thanksgiving күнін жариялауы.",
+            "Сондықтан дәстүрдің қалыптасуына A және C екеуі де қатысты.",
+            "Дұрыс жауап — A and C."
+          ],
+          ru:[
+            "В тексте указаны два события: праздник пилигримов после получения еды и обращение Lincoln о “day of Thanksgiving”.",
+            "Значит, верны A и C.",
+            "Правильный ответ — A and C."
+          ]
+        }
+      },
+      {
+        id:46,
+        answer:"D",
+        question:{kk:"Which food(s) are often prepared for Thanksgiving dinner?",ru:"Which food(s) are often prepared for Thanksgiving dinner?"},
+        options:[
+          {kk:"Turkey",ru:"Turkey"},
+          {kk:"Potatoes",ru:"Potatoes"},
+          {kk:"Stuffing",ru:"Stuffing"},
+          {kk:"All of the above",ru:"All of the above"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Thanksgiving dinner құрамында turkey, mashed potatoes, stuffing бар екені жазылған.",
+            "Сондықтан барлық аталған тағамдар дұрыс.",
+            "Дұрыс жауап — All of the above."
+          ],
+          ru:[
+            "В тексте сказано, что Thanksgiving dinner включает turkey, mashed potatoes и stuffing.",
+            "Значит, все перечисленные варианты верны.",
+            "Правильный ответ — All of the above."
+          ]
+        }
+      },
+      {
+        id:47,
+        answer:"C",
+        question:{kk:"_______ initiated the contemporary practice of Thanksgiving by calling for a “day of Thanksgiving”.",ru:"_______ initiated the contemporary practice of Thanksgiving by calling for a “day of Thanksgiving”."},
+        options:[
+          {kk:"Andrew Johnson",ru:"Andrew Johnson"},
+          {kk:"James Buchanan",ru:"James Buchanan"},
+          {kk:"Abraham Lincoln",ru:"Abraham Lincoln"},
+          {kk:"Ulysses Grant",ru:"Ulysses Grant"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде contemporary practice of Thanksgiving бастамасын President Abraham Lincoln көтергені жазылған.",
+            "Дұрыс жауап — Abraham Lincoln."
+          ],
+          ru:[
+            "В тексте сказано, что современную практику Thanksgiving initiated President Abraham Lincoln.",
+            "Правильный ответ — Abraham Lincoln."
+          ]
+        }
+      },
+      {
+        id:48,
+        answer:"D",
+        question:{kk:"Where is Thanksgiving celebrated?",ru:"Where is Thanksgiving celebrated?"},
+        options:[
+          {kk:"Only in America",ru:"Only in America"},
+          {kk:"Only in Canada",ru:"Only in Canada"},
+          {kk:"In English speaking countries",ru:"In English speaking countries"},
+          {kk:"Throughout North America and some other parts of the world, albeit in different forms and on different dates",ru:"Throughout North America and some other parts of the world, albeit in different forms and on different dates"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Thanksgiving негізінен North America-да атап өтілетіні және әр елде мағынасы әртүрлі екені айтылған.",
+            "Сондықтан ең толық жауап — North America және басқа жерлерде әртүрлі формада.",
+            "Дұрыс жауап — D."
+          ],
+          ru:[
+            "В тексте сказано, что Thanksgiving преимущественно отмечается в North America и имеет разные значения в разных странах.",
+            "Самый полный вариант — North America and some other parts of the world in different forms.",
+            "Правильный ответ — D."
+          ]
+        }
+      },
+      {
+        id:49,
+        answer:"A",
+        question:{kk:"The holiday signifies the immense progress made by pilgrims at Plymouth Plantation circa _______.",ru:"The holiday signifies the immense progress made by pilgrims at Plymouth Plantation circa _______."},
+        options:[
+          {kk:"1621",ru:"1621"},
+          {kk:"1612",ru:"1612"},
+          {kk:"1721",ru:"1721"},
+          {kk:"1631",ru:"1631"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде Plymouth Plantation circa 1621 деп нақты жазылған.",
+            "Дұрыс жауап — 1621."
+          ],
+          ru:[
+            "В тексте прямо указано: Plymouth Plantation circa 1621.",
+            "Правильный ответ — 1621."
+          ]
+        }
+      },
+      {
+        id:50,
+        answer:"C",
+        question:{kk:"What is the meaning of Thanksgiving's federal holiday status?",ru:"What is the meaning of Thanksgiving's federal holiday status?"},
+        options:[
+          {kk:"The federal government instructs all citizens to celebrate Thanksgiving",ru:"The federal government instructs all citizens to celebrate Thanksgiving"},
+          {kk:"Only federal government employees celebrate Thanksgiving",ru:"Only federal government employees celebrate Thanksgiving"},
+          {kk:"All federal employees and many other workers are given a day off for Thanksgiving",ru:"All federal employees and many other workers are given a day off for Thanksgiving"},
+          {kk:"It’s difficult to say for sure",ru:"It’s difficult to say for sure"}
+        ],
+        explain:{
+          kk:[
+            "Мәтінде federal holiday дегені — government employees және most private employees демалыс алады деп түсіндірілген.",
+            "Яғни мемлекеттік қызметкерлер және көптеген басқа жұмысшыларға демалыс беріледі.",
+            "Дұрыс жауап — C."
+          ],
+          ru:[
+            "В тексте объясняется, что federal holiday означает выходной для government employees и большинства private employees.",
+            "То есть федеральные служащие и многие другие работники получают выходной.",
+            "Правильный ответ — C."
+          ]
+        }
+      }
+    ]
+  }
+];
+
+function renderReading(){
+  return `
+    <div class="card" data-test="englishReading">
+      <h3>Reading</h3>
+
+      ${readingData.map(section=>`
+        <div class="textBlock">
+          <h3>${section.title}</h3>
+
+          <div class="tabs">
+            <button class="tab active" type="button" onclick="openTab('${section.key}','test')">Test</button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','text')">Text</button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','translation')">
+              <span class="kk">Аударма</span>
+              <span class="ru">Перевод</span>
+            </button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','empty')">
+              <span class="kk">Сұрақтар</span>
+              <span class="ru">Вопросы</span>
+            </button>
+          </div>
+
+          <div class="tabContent active" data-tabs="${section.key}" data-panel="test">
+            <p>${section.text.replace(/\n/g,"<br>")}</p>
+            ${section.questions.map(q=>renderQuestion("englishReading",q)).join("")}
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="text">
+            <p>${section.text.replace(/\n/g,"<br>")}</p>
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="translation">
+            <p>${t(section.translation).replace(/\n/g,"<br>")}</p>
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="empty">
+            ${section.questions.map(q=>renderQuestion("englishReading",q)).join("")}
+          </div>
+        </div>
+      `).join("")}
+
+      <div class="actions">
+        <button class="btn" type="button" onclick="checkTest('englishReading')">
+          <span class="kk">Reading нәтижесін көрсету</span>
+          <span class="ru">Показать результат Reading</span>
+        </button>
+
+        <button class="btn secondary" type="button" onclick="resetTest('englishReading')">
+          <span class="kk">Қайта өту</span>
+          <span class="ru">Пройти заново</span>
+        </button>
+      </div>
+
+      <div class="result" id="englishReadingResult"></div>
+    </div>
+  `;
+}
+  const grammarFixes = {
+  17:{
+    answer:"B",
+    explain:{
+      kk:[
+        "Бұл сөйлемде нақты аспан денесі және нақты бағыт айтылып тұр.",
+        "Sun сөзі әдетте the артиклімен қолданылады: the Sun.",
+        "East — нақты бағыт, сондықтан the east болады.",
+        "Дұрыс жауап — the, the."
+      ],
+      ru:[
+        "В предложении говорится о конкретном небесном теле и конкретном направлении.",
+        "Слово Sun обычно употребляется с артиклем the: the Sun.",
+        "East как направление здесь употребляется с the: the east.",
+        "Правильный ответ — the, the."
+      ]
+    }
+  },
+
+  20:{
+    answer:"D",
+    explain:{
+      kk:[
+        "Дұрыс тұрақты тіркес: be interested in something.",
+        "Сөйлемде films сөзіне қатысты қызығу туралы айтылған.",
+        "Грамматикалық дұрыс түрі: films that they are not interested in at all.",
+        "Дұрыс жауап — in."
+      ],
+      ru:[
+        "Правильное устойчивое сочетание: be interested in something.",
+        "В предложении речь о фильмах, которыми люди совсем не интересуются.",
+        "Грамматически верно: films that they are not interested in at all.",
+        "Правильный ответ — in."
+      ]
+    }
+  },
+
+  23:{
+    answer:"C",
+    options:[
+      {kk:"on, in",ru:"on, in"},
+      {kk:"in, on",ru:"in, on"},
+      {kk:"at, on",ru:"at, on"},
+      {kk:"in, at",ru:"in, at"}
+    ],
+    explain:{
+      kk:[
+        "Британдық ағылшын тілінде weekends сөзімен at қолданылады: at weekends.",
+        "Holidays сөзімен бұл сөйлемде on қолданылады: on holidays.",
+        "Сондықтан дұрыс құрылым: at weekends and on holidays.",
+        "Дұрыс жауап — at, on."
+      ],
+      ru:[
+        "В британском английском со словом weekends употребляется at: at weekends.",
+        "Со словом holidays в этом предложении употребляется on: on holidays.",
+        "Правильная конструкция: at weekends and on holidays.",
+        "Правильный ответ — at, on."
+      ]
+    }
+  },
+
+  24:{
+    answer:"A",
+    explain:{
+      kk:[
+        "Ондық бөлшектер ағылшын тілінде point сөзінен кейін цифрлар жеке-жеке оқылады.",
+        "0.375 дұрыс оқылуы: nought point three seven five.",
+        "Thirty seven немесе seventy five деп топтап оқу дұрыс емес.",
+        "Дұрыс жауап — nought point three seven five."
+      ],
+      ru:[
+        "Десятичные дроби в английском после point читаются по отдельным цифрам.",
+        "0.375 правильно читается: nought point three seven five.",
+        "Читать thirty seven или seventy five здесь неверно.",
+        "Правильный ответ — nought point three seven five."
+      ]
+    }
+  },
+
+  27:{
+    answer:"B",
+    explain:{
+      kk:[
+        "Ағылшын тілінде «дүниеге келді» мағынасы be born құрылымымен беріледі.",
+        "Өткен шақта дұрыс түрі: was born.",
+        "She was born in a small village...",
+        "Дұрыс жауап — was born."
+      ],
+      ru:[
+        "В английском «родилась» передаётся конструкцией be born.",
+        "В прошедшем времени правильная форма: was born.",
+        "She was born in a small village...",
+        "Правильный ответ — was born."
+      ]
+    }
+  },
+
+  28:{
+    answer:"A",
+    explain:{
+      kk:[
+        "Кесте бойынша дұрыс жауап A деп берілген.",
+        "Recognized / had been built құрылымы бірінші бөлікте Past Simple Active, екінші бөлікте Past Perfect Passive береді.",
+        "Сондықтан сайтта дұрыс жауап ретінде A белгіленеді."
+      ],
+      ru:[
+        "По таблице ответов правильный вариант — A.",
+        "Recognized / had been built даёт Past Simple Active в первой части и Past Perfect Passive во второй.",
+        "Поэтому в сайте правильным ответом отмечается A."
+      ]
+    }
+  },
+
+  31:{
+    answer:"A",
+    explain:{
+      kk:[
+        "Past Simple Passive: was built — өткен шақтағы аяқталған әрекет.",
+        "Өткен уақытты көрсету үшін ago қолданылады: 300 years ago.",
+        "In 300 years, for 300 years, since 300 years бұл сөйлемге сәйкес емес.",
+        "Дұрыс жауап — 300 years ago."
+      ],
+      ru:[
+        "Past Simple Passive: was built — завершённое действие в прошлом.",
+        "Для указания прошедшего времени используется ago: 300 years ago.",
+        "In 300 years, for 300 years, since 300 years здесь не подходят.",
+        "Правильный ответ — 300 years ago."
+      ]
+    }
+  },
+
+  32:{
+    answer:"A",
+    explain:{
+      kk:[
+        "Құрал немесе дене мүшесі арқылы әрекет жасалғанда with қолданылады.",
+        "With their fingers — саусақтарымен.",
+        "Дұрыс сөйлем: Kazakh people used to eat Beshbarmak with their fingers.",
+        "Дұрыс жауап — with."
+      ],
+      ru:[
+        "Когда действие выполняется с помощью инструмента или части тела, используется with.",
+        "With their fingers — пальцами.",
+        "Правильное предложение: Kazakh people used to eat Beshbarmak with their fingers.",
+        "Правильный ответ — with."
+      ]
+    }
+  },
+
+  33:{
+    answer:"B",
+    explain:{
+      kk:[
+        "Seem кейін күрделі инфинитив қолданылады: seem to be holding.",
+        "Determination сөзімен to find тіркесі қолданылады: determination to find.",
+        "Толық сөйлем: Both sides seem to be holding on to their determination to find a peaceful solution.",
+        "Дұрыс жауап — to be holding / to find."
+      ],
+      ru:[
+        "После seem используется инфинитивная конструкция: seem to be holding.",
+        "Со словом determination употребляется to find: determination to find.",
+        "Полное предложение: Both sides seem to be holding on to their determination to find a peaceful solution.",
+        "Правильный ответ — to be holding / to find."
+      ]
+    }
+  }
+};
+
+function applyGrammarFixes(){
+  grammarQuestions.forEach(q=>{
+    if(grammarFixes[q.id]){
+      const fix = grammarFixes[q.id];
+      q.answer = fix.answer;
+      if(fix.options) q.options = fix.options;
+      if(fix.explain) q.explain = fix.explain;
+    }
+  });
+}
+
+function renderReading(){
+  return `
+    <div class="card" data-test="englishReading">
+      <h3>Reading</h3>
+
+      ${readingData.map(section=>`
+        <div class="textBlock">
+          <h3>${section.title}</h3>
+
+          <div class="tabs">
+            <button class="tab active" type="button" onclick="openTab('${section.key}','test')">Test</button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','text')">Text</button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','translation')">
+              <span class="kk">Аударма</span>
+              <span class="ru">Перевод</span>
+            </button>
+            <button class="tab" type="button" onclick="openTab('${section.key}','info')">
+              <span class="kk">Ескерту</span>
+              <span class="ru">Примечание</span>
+            </button>
+          </div>
+
+          <div class="tabContent active" data-tabs="${section.key}" data-panel="test">
+            <p>${section.text.replace(/\n/g,"<br>")}</p>
+            ${section.questions.map(q=>renderQuestion("englishReading",q)).join("")}
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="text">
+            <p>${section.text.replace(/\n/g,"<br>")}</p>
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="translation">
+            <p>${t(section.translation).replace(/\n/g,"<br>")}</p>
+          </div>
+
+          <div class="tabContent" data-tabs="${section.key}" data-panel="info">
+            <p>
+              <span class="kk">Сұрақтарға жауап беру үшін Test қойындысына өтіңіз. Мәтін мен аударма бөлек берілген.</span>
+              <span class="ru">Чтобы ответить на вопросы, перейдите во вкладку Test. Текст и перевод даны отдельно.</span>
+            </p>
+          </div>
+        </div>
+      `).join("")}
+
+      <div class="actions">
+        <button class="btn" type="button" onclick="checkTest('englishReading')">
+          <span class="kk">Reading нәтижесін көрсету</span>
+          <span class="ru">Показать результат Reading</span>
+        </button>
+
+        <button class="btn secondary" type="button" onclick="resetTest('englishReading')">
+          <span class="kk">Қайта өту</span>
+          <span class="ru">Пройти заново</span>
+        </button>
+      </div>
+
+      <div class="result" id="englishReadingResult"></div>
+    </div>
+  `;
+}
+
+function renderEnglish(){
+  document.getElementById("englishBlock").innerHTML =
+    renderListening() + renderGrammar() + renderReading();
+}
+
+function rerenderAll(){
+  applyGrammarFixes();
+  renderCritical();
+  renderAnalytical();
+  renderEnglish();
+}
+
+applyGrammarFixes();
+rerenderAll();
+</script>
+</body>
+</html>
